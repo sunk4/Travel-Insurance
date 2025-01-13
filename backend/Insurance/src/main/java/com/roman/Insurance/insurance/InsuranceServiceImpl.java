@@ -12,9 +12,11 @@ public class InsuranceServiceImpl implements InsuranceService {
     private final InsuranceMapper insuranceMapper;
 
     @Override
-    public InsuranceEntity createInsurance (InsuranceDTO insuranceDTO,
-                                            CustomerEntity customerEntity,
-                                            double totalPrice, int tripLength) {
+    public InsuranceEntity createInsurance (
+            InsuranceDTO insuranceDTO,
+            CustomerEntity customerEntity,
+            double totalPrice, int tripLength
+    ) {
         InsuranceEntity insuranceEntity = insuranceMapper.toEntity(insuranceDTO);
         insuranceEntity.setCustomer(customerEntity);
         insuranceEntity.setStatusOfPayment(StatusOfPayment.UNPAID);

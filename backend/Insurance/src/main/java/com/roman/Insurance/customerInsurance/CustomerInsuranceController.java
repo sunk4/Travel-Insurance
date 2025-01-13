@@ -5,8 +5,13 @@ import com.roman.Insurance.customer.CustomerService;
 import com.roman.Insurance.insurance.InsuranceEntity;
 import com.roman.Insurance.insurance.InsurancePriceCalculator;
 import com.roman.Insurance.insurance.InsuranceService;
+import com.roman.Insurance.pdfgenerator.PdfGeneratorService;
+import com.roman.Insurance.s3Bucket.UploadService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,9 +25,11 @@ public class CustomerInsuranceController {
     private final CustomerService customerService;
     private final InsuranceService insuranceService;
     private final InsurancePriceCalculator insurancePriceCalculator;
+    private final PdfGeneratorService pdfGeneratorService;
+    private final UploadService uploadService;
 
     @PostMapping
-    public ResponseEntity<Void> createCustomerInsurance (@Valid @RequestBody CustomerInsuranceRequest customerInsuranceRequest) throws Exception {
+    public ResponseEntity<byte[]> createCustomerInsurance (@Valid @RequestBody CustomerInsuranceRequest customerInsuranceRequest) throws Exception {
 
         CustomerEntity customerEntity = customerService.createCustomer(customerInsuranceRequest.customerDTO());
         int tripLength = customerInsuranceRequest.insuranceDTO().startDate()
@@ -35,7 +42,18 @@ public class CustomerInsuranceController {
         InsuranceEntity insuranceEntity =
                 insuranceService.createInsurance(customerInsuranceRequest.insuranceDTO(), customerEntity, totalPrice, tripLength);
 
-        return ResponseEntity.ok().build();
+        byte[] pdf = pdfGeneratorService.generatePdf(customerEntity,
+                insuranceEntity);
+
+        String fileName = "insurance_" + insuranceEntity.getId() + ".pdf";
+        String fileUrl = uploadService.uploadFileToS3(pdf, fileName);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_PDF);
+        headers.set(HttpHeaders.CONTENT_DISPOSITION, "attachment; " + "filename=InsurancePolicy_"  + ".pdf");
+        headers.setContentLength(pdf.length);
+
+        return new ResponseEntity<>(pdf, headers, HttpStatus.OK);
 
     }
 }
