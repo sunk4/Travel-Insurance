@@ -8,10 +8,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import util.Encryption;
+import Encryption.EncryptionService;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -25,6 +26,10 @@ import java.util.UUID;
 @Data
 @Table(name = "customers")
 public class CustomerEntity {
+
+    @Transient
+    @Autowired
+    private transient EncryptionService encryptionService;
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -88,80 +93,7 @@ public class CustomerEntity {
     @Column(insertable = false)
     private LocalDateTime updatedAt;
 
-    @PrePersist
-    @PreUpdate
-    private void encryptFields() {
-        try {
-            if (firstName != null) {
-                this.encryptedFistName = Encryption.encrypt(firstName);
-            }
-            if (lastName != null) {
-                this.encryptedLastName = Encryption.encrypt(lastName);
-            }
-            if (email != null) {
-                this.encryptedEmail = Encryption.encrypt(email);
-            }
-            if (phoneNumber != null) {
-                this.encryptedPhoneNumber = Encryption.encrypt(phoneNumber);
-            }
-            if (address != null) {
-                this.encryptedAddress = Encryption.encrypt(address);
-            }
-            if (city != null) {
-                this.encryptedCity = Encryption.encrypt(city);
-            }
-            if (state != null) {
-                this.encryptedState = Encryption.encrypt(state);
-            }
-            if (zipCode != null) {
-                this.encryptedZipCode = Encryption.encrypt(zipCode);
-            }
-            if (personalIdentificationNumber != null) {
-                this.encryptedPersonalIdentificationNumber = Encryption.encrypt(personalIdentificationNumber);
-            }
-        } catch (Exception e) {
-            throw new RuntimeException("Error encrypting fields", e);
-        }
-    }
 
 
-    @PostLoad
-    private void decryptFields() {
-        try {
-            if (encryptedFistName != null) {
-                this.firstName = Encryption.decrypt(encryptedLastName);
-            }
-            if (encryptedLastName != null) {
-                this.lastName = Encryption.decrypt(encryptedLastName);
-            }
-            if (encryptedPhoneNumber != null) {
-                this.phoneNumber = Encryption.decrypt(encryptedPhoneNumber);
-            }
-            if (encryptedEmail != null) {
-                this.email = Encryption.decrypt(encryptedEmail);
-            }
-            if (encryptedPhoneNumber != null) {
-                this.phoneNumber = Encryption.decrypt(encryptedPhoneNumber);
-            }
-            if (encryptedAddress != null) {
-                this.address = Encryption.decrypt(encryptedAddress);
-            }
-            if (encryptedCity != null) {
-                this.city = Encryption.decrypt(encryptedCity);
-            }
-            if (encryptedState != null) {
-                this.state = Encryption.decrypt(encryptedState);
-            }
-            if (encryptedZipCode != null) {
-                this.zipCode = Encryption.decrypt(encryptedZipCode);
-            }
-            if (encryptedPersonalIdentificationNumber != null) {
-                this.personalIdentificationNumber = Encryption.decrypt(encryptedPersonalIdentificationNumber);
-            }
-
-        } catch (Exception e) {
-            throw new RuntimeException("Error decrypting fields", e);
-        }
-    }
 
 }

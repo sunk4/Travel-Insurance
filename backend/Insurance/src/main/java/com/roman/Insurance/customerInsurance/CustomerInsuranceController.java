@@ -19,8 +19,10 @@ public class CustomerInsuranceController {
     private final InsuranceService insuranceService;
 
     @PostMapping
-    public ResponseEntity<Void> createCustomerInsurance (@Valid @RequestBody CustomerInsuranceRequest customerInsuranceRequest) {
+    public ResponseEntity<Void> createCustomerInsurance (@Valid @RequestBody CustomerInsuranceRequest customerInsuranceRequest) throws Exception {
+
         CustomerEntity customerEntity = customerService.createCustomer(customerInsuranceRequest.customerDTO());
+
 
         insuranceService.createInsurance(customerInsuranceRequest.insuranceDTO(), customerEntity);
 

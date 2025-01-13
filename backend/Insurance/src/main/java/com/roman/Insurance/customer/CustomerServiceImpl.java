@@ -1,5 +1,6 @@
 package com.roman.Insurance.customer;
 
+import Encryption.EncryptionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -8,10 +9,13 @@ import org.springframework.stereotype.Service;
 public class CustomerServiceImpl implements CustomerService {
     private final CustomerRepo customerRepository;
     private final CustomerMapper customerMapper;
+    private final EncryptionService encryptionService;
     @Override
-    public CustomerEntity createCustomer (CustomerDTO customerDTO) {
+    public CustomerEntity createCustomer (CustomerDTO customerDTO) throws Exception {
+
         CustomerEntity customerEntity = customerMapper.toEntity(customerDTO);
-        customerRepository.save(customerEntity);
+        CustomerEntity savedCustomerEntity = encryptionService.encrypt(customerEntity);
+        customerRepository.save(savedCustomerEntity);
 
         return customerEntity;
     }

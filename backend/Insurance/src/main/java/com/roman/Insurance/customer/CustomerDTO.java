@@ -3,6 +3,7 @@ package com.roman.Insurance.customer;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 public record CustomerDTO(
@@ -31,6 +32,13 @@ public record CustomerDTO(
         String state,
 
         @NotBlank(message = "Zip code is required")
-        String zipCode
+        String zipCode,
+
+        @NotBlank(message = "Personal identification number is required")
+        String personalIdentificationNumber,
+
+        LocalDateTime createdAt,
+
+        LocalDateTime updatedAt
 ) {
 }
