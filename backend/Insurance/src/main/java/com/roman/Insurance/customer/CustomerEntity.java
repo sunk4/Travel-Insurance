@@ -4,6 +4,7 @@ import com.roman.Insurance.insurance.InsuranceEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import Encryption.EncryptionService;
+import com.roman.Insurance.encryption.EncryptionService;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -82,6 +83,8 @@ public class CustomerEntity {
     @Transient
     @NotBlank(message = "Personal identification number is required")
     private String personalIdentificationNumber;
+    @NotNull(message = "Age is required")
+    private int age;
 
     @OneToMany(mappedBy = "customer")
     private List<InsuranceEntity> insurances;

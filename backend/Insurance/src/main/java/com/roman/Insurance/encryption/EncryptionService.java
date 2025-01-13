@@ -1,4 +1,4 @@
-package Encryption;
+package com.roman.Insurance.encryption;
 
 import com.roman.Insurance.customer.CustomerEntity;
 

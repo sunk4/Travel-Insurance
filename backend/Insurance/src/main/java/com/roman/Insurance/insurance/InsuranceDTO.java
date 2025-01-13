@@ -1,9 +1,9 @@
 package com.roman.Insurance.insurance;
 
+import com.roman.Insurance.enums.Continents;
 import com.roman.Insurance.enums.InsuranceType;
 import com.roman.Insurance.enums.StatusOfPayment;
 import jakarta.validation.constraints.FutureOrPresent;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -15,14 +15,12 @@ public record InsuranceDTO(
 
         UUID id,
 
-        @NotBlank(message = "Continent is required")
-        String continent,
+        @NotNull(message = "Continent is required")
+        Continents continent,
 
         @NotBlank(message = "Country is required")
         String country,
 
-        @NotNull(message = "Trip length is required.")
-        @Min(value = 1, message = "Trip length must be at least 1.")
         int tripLength,
 
         @NotNull
@@ -39,6 +37,8 @@ public record InsuranceDTO(
 
         String urlInsurancePreview,
         String urlInsurancePayed,
+        double totalPrice,
+
 
         UUID customerId,
 

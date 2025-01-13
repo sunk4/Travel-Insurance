@@ -2,6 +2,8 @@ package com.roman.Insurance.customerInsurance;
 
 import com.roman.Insurance.customer.CustomerEntity;
 import com.roman.Insurance.customer.CustomerService;
+import com.roman.Insurance.insurance.InsuranceEntity;
+import com.roman.Insurance.insurance.InsurancePriceCalculator;
 import com.roman.Insurance.insurance.InsuranceService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -17,14 +19,21 @@ import org.springframework.web.bind.annotation.RestController;
 public class CustomerInsuranceController {
     private final CustomerService customerService;
     private final InsuranceService insuranceService;
+    private final InsurancePriceCalculator insurancePriceCalculator;
 
     @PostMapping
     public ResponseEntity<Void> createCustomerInsurance (@Valid @RequestBody CustomerInsuranceRequest customerInsuranceRequest) throws Exception {
 
         CustomerEntity customerEntity = customerService.createCustomer(customerInsuranceRequest.customerDTO());
+        int tripLength = customerInsuranceRequest.insuranceDTO().startDate()
+                .until(customerInsuranceRequest.insuranceDTO().endDate()).getDays();
 
-
-        insuranceService.createInsurance(customerInsuranceRequest.insuranceDTO(), customerEntity);
+        double totalPrice = insurancePriceCalculator.calculateInsurancePrice(customerInsuranceRequest.customerDTO().age(),
+                customerInsuranceRequest.insuranceDTO().continent(),
+                tripLength,
+                customerInsuranceRequest.insuranceDTO().type());
+        InsuranceEntity insuranceEntity =
+                insuranceService.createInsurance(customerInsuranceRequest.insuranceDTO(), customerEntity, totalPrice, tripLength);
 
         return ResponseEntity.ok().build();
 

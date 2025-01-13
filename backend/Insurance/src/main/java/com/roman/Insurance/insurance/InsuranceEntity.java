@@ -1,6 +1,7 @@
 package com.roman.Insurance.insurance;
 
 import com.roman.Insurance.customer.CustomerEntity;
+import com.roman.Insurance.enums.Continents;
 import com.roman.Insurance.enums.InsuranceType;
 import com.roman.Insurance.enums.StatusOfPayment;
 import jakarta.persistence.*;
@@ -29,8 +30,9 @@ public class InsuranceEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-    @NotBlank(message = "Continent is required")
-    private String continent;
+    @Enumerated(EnumType.STRING)
+    @NotNull(message = "Continent is required")
+    private Continents continent;
     @NotBlank(message = "Country is required")
     private String country;
     @NotNull(message = "Trip length is required.")
@@ -44,12 +46,15 @@ public class InsuranceEntity {
     private LocalDate endDate;
 
     @Enumerated(EnumType.STRING)
-    @NotNull
+    @NotNull(message = "Insurance type is required")
     private InsuranceType type;
 
     @Enumerated(EnumType.STRING)
     @NotNull
     private StatusOfPayment statusOfPayment;
+
+    @NotNull
+    private double totalPrice;
 
     private String urlInsurancePreview;
     private String urlInsurancePayed;

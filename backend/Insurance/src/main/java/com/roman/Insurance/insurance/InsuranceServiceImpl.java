@@ -10,12 +10,18 @@ import org.springframework.stereotype.Service;
 public class InsuranceServiceImpl implements InsuranceService {
     private final InsuranceRepo insuranceRepo;
     private final InsuranceMapper insuranceMapper;
+
     @Override
-    public void createInsurance (InsuranceDTO insuranceDTO, CustomerEntity customerEntity) {
+    public InsuranceEntity createInsurance (InsuranceDTO insuranceDTO,
+                                            CustomerEntity customerEntity,
+                                            double totalPrice, int tripLength) {
         InsuranceEntity insuranceEntity = insuranceMapper.toEntity(insuranceDTO);
         insuranceEntity.setCustomer(customerEntity);
         insuranceEntity.setStatusOfPayment(StatusOfPayment.UNPAID);
-        insuranceRepo.save(insuranceEntity);
+        insuranceEntity.setTripLength(tripLength);
+        insuranceEntity.setTotalPrice(totalPrice);
+
+        return insuranceRepo.save(insuranceEntity);
 
     }
 }

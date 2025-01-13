@@ -1,6 +1,6 @@
 package com.roman.Insurance.customer;
 
-import Encryption.EncryptionService;
+import com.roman.Insurance.encryption.EncryptionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
