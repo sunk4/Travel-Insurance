@@ -2,6 +2,7 @@ package com.roman.Insurance.insurance;
 
 import com.roman.Insurance.customer.CustomerEntity;
 import com.roman.Insurance.enums.InsuranceType;
+import com.roman.Insurance.enums.StatusOfPayment;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
@@ -45,6 +46,10 @@ public class Insurance {
     @Enumerated(EnumType.STRING)
     @NotNull
     private InsuranceType type;
+
+    @Enumerated(EnumType.STRING)
+    @NotNull
+    private StatusOfPayment statusOfPayment;
 
     @ManyToOne
     @JoinColumn(name = "customer_id")

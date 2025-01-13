@@ -22,3 +22,6 @@ aws:
     region: ${AWS_REGION}
     bucket-name: ${AWS_BUCKET_NAME}
 
+encryption:
+  secret:
+    key: ${ENCRYPTION_SECRET_KEY}
