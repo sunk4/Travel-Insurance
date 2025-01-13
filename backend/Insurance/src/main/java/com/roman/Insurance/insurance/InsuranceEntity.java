@@ -24,7 +24,7 @@ import java.util.UUID;
 @Builder
 @Data
 @Table(name = "insurances")
-public class Insurance {
+public class InsuranceEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

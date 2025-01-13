@@ -1,6 +1,6 @@
 package com.roman.Insurance.customer;
 
-import com.roman.Insurance.insurance.Insurance;
+import com.roman.Insurance.insurance.InsuranceEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -79,7 +79,7 @@ public class CustomerEntity {
     private String personalIdentificationNumber;
 
     @OneToMany(mappedBy = "customer")
-    private List<Insurance> insurances;
+    private List<InsuranceEntity> insurances;
 
     @CreatedDate
     @Column(nullable = false, updatable = false)

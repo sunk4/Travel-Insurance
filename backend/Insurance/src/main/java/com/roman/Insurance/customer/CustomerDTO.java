@@ -32,4 +32,5 @@ public record CustomerDTO(
 
         @NotBlank(message = "Zip code is required")
         String zipCode
-) {}
+) {
+}
