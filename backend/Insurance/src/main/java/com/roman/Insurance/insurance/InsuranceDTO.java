@@ -36,6 +36,9 @@ public record InsuranceDTO(
         @NotNull(message = "Status of payment is required")
         String statusOfPayment,
 
+        String urlInsurancePreview,
+        String urlInsurancePayed,
+
         UUID customerId
 ) {
 }

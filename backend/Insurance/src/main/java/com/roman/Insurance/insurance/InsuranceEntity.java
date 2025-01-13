@@ -51,6 +51,9 @@ public class InsuranceEntity {
     @NotNull
     private StatusOfPayment statusOfPayment;
 
+    private String urlInsurancePreview;
+    private String urlInsurancePayed;
+
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private CustomerEntity customer;
