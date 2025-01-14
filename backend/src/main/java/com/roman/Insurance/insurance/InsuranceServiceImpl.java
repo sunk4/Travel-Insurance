@@ -5,6 +5,8 @@ import com.roman.Insurance.enums.StatusOfPayment;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 @RequiredArgsConstructor
 public class InsuranceServiceImpl implements InsuranceService {
@@ -25,5 +27,23 @@ public class InsuranceServiceImpl implements InsuranceService {
 
         return insuranceRepo.save(insuranceEntity);
 
+    }
+
+    @Override
+    public void updateStatusOfPayment (UUID id, StatusOfPayment statusOfPayment) {
+
+    }
+
+    @Override
+    public void updateUrlInsurancePayed (UUID id, String urlInsurancePayed) {
+
+    }
+
+    @Override
+    public void updateUrlInsurancePreview (UUID id, String urlInsurancePreview) {
+        InsuranceEntity insuranceEntity =
+                insuranceRepo.findById(id).orElseThrow(() -> new RuntimeException("Insurance not found"));
+        insuranceEntity.setUrlInsurancePreview(urlInsurancePreview);
+        insuranceRepo.save(insuranceEntity);
     }
 }

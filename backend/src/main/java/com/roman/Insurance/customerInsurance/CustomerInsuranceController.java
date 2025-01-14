@@ -45,12 +45,16 @@ public class CustomerInsuranceController {
         byte[] pdf = pdfGeneratorService.generatePdf(customerEntity,
                 insuranceEntity);
 
-        String fileName = "insurance_" + insuranceEntity.getId() + ".pdf";
+        String fileName =
+                "insurance_" + insuranceEntity.getId() + customerEntity.getLastName() +
+                        ".pdf";
         String fileUrl = uploadService.uploadFileToS3(pdf, fileName);
+
+        insuranceService.updateUrlInsurancePreview(insuranceEntity.getId(), fileUrl);
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_PDF);
-        headers.set(HttpHeaders.CONTENT_DISPOSITION, "attachment; " + "filename=InsurancePolicy_"  + ".pdf");
+        headers.set(HttpHeaders.CONTENT_DISPOSITION, "attachment; " + "filename=InsurancePolicy_" + ".pdf");
         headers.setContentLength(pdf.length);
 
         return new ResponseEntity<>(pdf, headers, HttpStatus.OK);

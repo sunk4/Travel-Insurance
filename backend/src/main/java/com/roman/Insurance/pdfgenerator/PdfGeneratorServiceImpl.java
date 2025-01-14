@@ -130,11 +130,11 @@ public class PdfGeneratorServiceImpl implements PdfGeneratorService {
         signatureTable.setSpacingBefore(10f);
         signatureTable.setWidths(new int[]{2, 2});
 
-        PdfPCell clientSignatureCell = new PdfPCell(new Phrase("Client Signature: ________________________", normalFont));
+        PdfPCell clientSignatureCell = new PdfPCell(new Phrase("Client Signature: _______________", normalFont));
         clientSignatureCell.setBorder(Rectangle.NO_BORDER);
         signatureTable.addCell(clientSignatureCell);
 
-        PdfPCell representativeSignatureCell = new PdfPCell(new Phrase("Representative Signature: ________________________", normalFont));
+        PdfPCell representativeSignatureCell = new PdfPCell(new Phrase("Representative Signature: _______________", normalFont));
         representativeSignatureCell.setBorder(Rectangle.NO_BORDER);
         representativeSignatureCell.setHorizontalAlignment(Element.ALIGN_RIGHT);
         signatureTable.addCell(representativeSignatureCell);
