@@ -2,8 +2,8 @@ package com.roman.Insurance.customerInsurance;
 
 import com.roman.Insurance.customer.CustomerEntity;
 import com.roman.Insurance.customer.CustomerService;
+import com.roman.Insurance.email.EmailService;
 import com.roman.Insurance.insurance.InsuranceEntity;
-import com.roman.Insurance.insurance.InsurancePriceCalculator;
 import com.roman.Insurance.insurance.InsuranceService;
 import com.roman.Insurance.pdfgenerator.PdfGeneratorService;
 import com.roman.Insurance.s3Bucket.UploadService;
@@ -24,9 +24,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class CustomerInsuranceController {
     private final CustomerService customerService;
     private final InsuranceService insuranceService;
-    private final InsurancePriceCalculator insurancePriceCalculator;
     private final PdfGeneratorService pdfGeneratorService;
     private final UploadService uploadService;
+    private final EmailService emailService;
 
     @PostMapping
     public ResponseEntity<byte[]> createCustomerInsurance (@Valid @RequestBody CustomerInsuranceRequest customerInsuranceRequest) throws Exception {
@@ -35,7 +35,8 @@ public class CustomerInsuranceController {
         int tripLength = customerInsuranceRequest.insuranceDTO().startDate()
                 .until(customerInsuranceRequest.insuranceDTO().endDate()).getDays();
 
-        double totalPrice = insurancePriceCalculator.calculateInsurancePrice(customerInsuranceRequest.customerDTO().age(),
+        double totalPrice =
+                insuranceService.calculateInsurancePrice(customerInsuranceRequest.customerDTO().age(),
                 customerInsuranceRequest.insuranceDTO().continent(),
                 tripLength,
                 customerInsuranceRequest.insuranceDTO().type());
@@ -45,8 +46,14 @@ public class CustomerInsuranceController {
         byte[] pdf = pdfGeneratorService.generatePdf(customerEntity,
                 insuranceEntity);
 
+        emailService.sendEmailWithGeneratedAttachment(customerEntity.getEmail(),
+                "Insurance Policy",
+                "emailTemplate",
+                pdf,
+                "InsurancePolicy_" + ".pdf");
+
         String fileName =
-                "insurance_" + insuranceEntity.getId() + customerEntity.getLastName() +
+                "insurance_" + insuranceEntity.getId() + "_" + customerEntity.getLastName() +
                         ".pdf";
         String fileUrl = uploadService.uploadFileToS3(pdf, fileName);
 
