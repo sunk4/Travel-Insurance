@@ -18,7 +18,28 @@ public class EmailServiceImpl implements EmailService {
     private final TemplateEngine templateEngine;
 
     @Override
-    public void sendEmailWithGeneratedAttachment (String to, String subject, String templateName, byte[] fileData, String fileName) throws MessagingException {
+    public void sendEmailWithGeneratedAttachment (String to, String paymentLink, String subject, String templateName, byte[] fileData, String fileName) throws MessagingException {
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
+        Context context = new Context();
+        context.setVariable("name", "User");
+        context.setVariable("paymentLink", paymentLink);
+        String htmlContent = templateEngine.process(templateName, context);
+
+        InputStreamSource attachment = new ByteArrayResource(fileData);
+
+        helper.setTo(to);
+        helper.setSubject(subject);
+        helper.setText(htmlContent, true);
+        helper.addAttachment(fileName, attachment);
+
+        mailSender.send(message);
+
+    }
+
+    @Override
+    public void sendEmailWithConfirmationAndAttachment (String to, String subject, String templateName, byte[] fileData, String fileName) throws MessagingException {
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
 
@@ -34,6 +55,5 @@ public class EmailServiceImpl implements EmailService {
         helper.addAttachment(fileName, attachment);
 
         mailSender.send(message);
-
     }
 }

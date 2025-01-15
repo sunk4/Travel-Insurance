@@ -11,8 +11,9 @@ public interface InsuranceService {
     InsuranceEntity createInsurance (InsuranceDTO insuranceDTO,
                        CustomerEntity customerEntity, double totalPrice, int tripLength);
 
-    void updateStatusOfPayment(UUID id, StatusOfPayment statusOfPayment);
+    InsuranceEntity updateStatusOfPayment(UUID id, StatusOfPayment statusOfPayment);
     void updateUrlInsurancePayed(UUID id, String urlInsurancePayed);
     void updateUrlInsurancePreview(UUID id, String urlInsurancePreview);
     double calculateInsurancePrice(int age, Continents continent, int tripLength, InsuranceType type);
+    InsuranceEntity getInsuranceById(UUID id);
 }

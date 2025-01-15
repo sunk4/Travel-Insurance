@@ -4,6 +4,8 @@ import com.roman.Insurance.encryption.EncryptionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 @RequiredArgsConstructor
 public class CustomerServiceImpl implements CustomerService {
@@ -18,5 +20,11 @@ public class CustomerServiceImpl implements CustomerService {
         customerRepository.save(savedCustomerEntity);
 
         return customerEntity;
+    }
+
+    @Override
+    public CustomerEntity getCustomerById (UUID customerId) {
+
+        return customerRepository.findById(customerId).orElseThrow(() -> new RuntimeException("Customer not found"));
     }
 }

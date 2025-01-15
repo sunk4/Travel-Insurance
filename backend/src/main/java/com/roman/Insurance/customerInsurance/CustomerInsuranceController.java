@@ -7,6 +7,7 @@ import com.roman.Insurance.insurance.InsuranceEntity;
 import com.roman.Insurance.insurance.InsuranceService;
 import com.roman.Insurance.pdfgenerator.PdfGeneratorService;
 import com.roman.Insurance.s3Bucket.UploadService;
+import com.roman.Insurance.stripe.StripeService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -27,6 +28,7 @@ public class CustomerInsuranceController {
     private final PdfGeneratorService pdfGeneratorService;
     private final UploadService uploadService;
     private final EmailService emailService;
+    private final StripeService stripeService;
 
     @PostMapping
     public ResponseEntity<byte[]> createCustomerInsurance (@Valid @RequestBody CustomerInsuranceRequest customerInsuranceRequest) throws Exception {
@@ -37,16 +39,20 @@ public class CustomerInsuranceController {
 
         double totalPrice =
                 insuranceService.calculateInsurancePrice(customerInsuranceRequest.customerDTO().age(),
-                customerInsuranceRequest.insuranceDTO().continent(),
-                tripLength,
-                customerInsuranceRequest.insuranceDTO().type());
+                        customerInsuranceRequest.insuranceDTO().continent(),
+                        tripLength,
+                        customerInsuranceRequest.insuranceDTO().type());
         InsuranceEntity insuranceEntity =
                 insuranceService.createInsurance(customerInsuranceRequest.insuranceDTO(), customerEntity, totalPrice, tripLength);
+
+        String paymentLink = stripeService.createPaymentLink(totalPrice, "EUR",
+                "Travel Insurance for " + customerEntity.getFirstName() + " " + customerEntity.getLastName(), insuranceEntity.getId(), customerEntity.getId());
 
         byte[] pdf = pdfGeneratorService.generatePdf(customerEntity,
                 insuranceEntity);
 
         emailService.sendEmailWithGeneratedAttachment(customerEntity.getEmail(),
+                paymentLink,
                 "Insurance Policy",
                 "emailTemplate",
                 pdf,

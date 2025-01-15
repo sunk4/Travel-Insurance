@@ -32,8 +32,12 @@ public class InsuranceServiceImpl implements InsuranceService {
     }
 
     @Override
-    public void updateStatusOfPayment (UUID id, StatusOfPayment statusOfPayment) {
+    public InsuranceEntity updateStatusOfPayment (UUID id, StatusOfPayment statusOfPayment) {
 
+        InsuranceEntity insuranceEntity =
+                insuranceRepo.findById(id).orElseThrow(() -> new RuntimeException("Insurance not found"));
+        insuranceEntity.setStatusOfPayment(statusOfPayment);
+        return insuranceRepo.save(insuranceEntity);
     }
 
     @Override
@@ -94,5 +98,10 @@ public class InsuranceServiceImpl implements InsuranceService {
         }
 
         return (double) Math.round(price * tripLength * 100) / 100;
+    }
+
+    @Override
+    public InsuranceEntity getInsuranceById (UUID id) {
+        return insuranceRepo.findById(id).orElseThrow(() -> new RuntimeException("Insurance not found"));
     }
 }
