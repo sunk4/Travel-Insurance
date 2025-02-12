@@ -27,5 +27,6 @@ public class CustomerServiceImpl implements CustomerService {
     public CustomerEntity getCustomerById (UUID customerId) {
 
         return customerRepository.findById(customerId).orElseThrow(() -> new RuntimeException("Customer not found"));
+
     }
 }
