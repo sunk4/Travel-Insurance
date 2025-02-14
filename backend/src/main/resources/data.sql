@@ -1,8 +1,29 @@
-INSERT INTO coverage_regions (id, name, description, risk_factor, created_at, updated_at) VALUES
-    ('a07f0742-f6ca-4ac5-82f6-906d6716216a', 'Slovenská republika', 'Európa|Turecko|Alžírsko|Maroko|Tunisko|Cyprus|Egypt|Izrael|Jordánsko|Gruzínsko|Arménsko|Azerbajdžan|európska časť Ruskej federácie', 6, NOW(), NOW()),
-    ('8dccf1ad-4c0d-4459-ab8c-9eff6a675437', 'Česka republika', 'Slovensko', 4, NOW(), NOW()),
-    ('2a43c218-f17d-4fc7-a044-178c55aa9939', 'Európa + ostatné krajiny', 'Česká Republika', 5, NOW(), NOW()),
-    ('2027c7e8-e591-4d21-a6fb-a0cf6ce40e4a', 'Svet', 'Svet', 8, NOW(), NOW())
+INSERT INTO coverage_regions (id, name, description, base_price_per_day, created_at, updated_at) VALUES
+    ('a07f0742-f6ca-4ac5-82f6-906d6716216a', 'Slovenská republika', 'Slovensko', 1, NOW(), NOW()),
+    ('8dccf1ad-4c0d-4459-ab8c-9eff6a675437', 'Česka republika', 'Česka republika', 2, NOW(), NOW()),
+    ('2a43c218-f17d-4fc7-a044-178c55aa9939', 'Európa + ostatné krajiny', 'Európa|Turecko|Alžírsko|Maroko|Tunisko|Cyprus|Egypt|Izrael|Jordánsko|Gruzínsko|Arménsko|Azerbajdžan|európska časť Ruskej federácie', 3, NOW(), NOW()),
+    ('2027c7e8-e591-4d21-a6fb-a0cf6ce40e4a', 'Svet', 'Svet', 4, NOW(), NOW())
+ON CONFLICT (id) DO NOTHING;
+
+
+INSERT INTO risk_factors (id, name, risk_factor, created_at, updated_at) VALUES
+('9675e813-a204-408e-a0c5-0982038368a8', 'Turistika (zahŕňa aj rekreačný šport)',1.2, NOW(), NOW()),
+('2801a355-0c89-4bbc-80a2-b76884fb6e72', 'Šport', 1.4, NOW(), NOW()),
+('4cc092e9-37c3-431d-ab47-38c860de5121', 'Manuálna práca',1.8, NOW(), NOW())
+ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO insurance_types (id, name, description, base_price_per_day, created_at, updated_at) VALUES
+('06ccaaf0-ad9e-451a-9f52-f8379ba3518c', 'Poistenie mimoriadnej situácie (Pandémia)', 'Uhradíme vám liečbu pandemického a epidemického ochorenia (napr. COVID-19 a iné) aj v rizikových krajinách a naviac vám poskytneme extra ochranu v prípade ďalších mimoriadnych udalostí.', 0.80, NOW(), NOW()),
+('452c53b1-b490-4ccc-be4e-f7a3e0878501', 'Cestovné doklady', 'Uhradíme vám náklady spojené so stratou, zničením či odcudzením cestovných dokladov.', 0.50, NOW(), NOW()),
+('34158c67-4fc7-463c-8a78-815faa44e79d', 'Batožina', 'Poistenie kryje poškodenie, zničenie, odcudzenie, alebo stratu vecí osobnej potreby.', 0.70, NOW(), NOW()),
+('8b1a9d87-6cbc-4b42-85a7-8d59292c5ef3', 'Zodpovednosť za škodu', 'Dôležité poistenie, ktoré vám preplatí vysoké účty za škodu, ktorú niekomu spôsobíte.', 0.15, NOW(), NOW()),
+('1759e792-d762-4864-a4aa-a3b62524ad1f', 'Úraz', 'Vyplatíme vám odškodnenie v prípade trvalých následkov alebo smrti v dôsledku úrazu.', 0.25, NOW(), NOW())
+ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO age_categories (id, name, min_age, max_age, price_factor, created_at, updated_at) VALUES
+('e51364f6-5b92-4725-9132-f6ad13cce0aa', '0 - 14 rokov', 0, 14, 1.4, NOW(), NOW()),
+('4c0ed12d-2892-4304-b3fd-efe97afc909b', '15 - 69 rokov', 15, 69, 1.1, NOW(), NOW()),
+('f901dcfa-9134-4ea1-9d81-fb5a4c7066ad', 'nad 70 rokov', 70, NULL, 1.7, NOW(), NOW())
 ON CONFLICT (id) DO NOTHING;
 
 

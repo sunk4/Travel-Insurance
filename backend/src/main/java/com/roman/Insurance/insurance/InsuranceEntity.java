@@ -1,7 +1,7 @@
 package com.roman.Insurance.insurance;
 
+import com.roman.Insurance.country.CountryEntity;
 import com.roman.Insurance.customer.CustomerEntity;
-import com.roman.Insurance.enums.Continents;
 import com.roman.Insurance.enums.InsuranceType;
 import com.roman.Insurance.enums.StatusOfPayment;
 import jakarta.persistence.*;
@@ -30,11 +30,10 @@ public class InsuranceEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-    @Enumerated(EnumType.STRING)
-    @NotNull(message = "Continent is required")
-    private Continents continent;
-    @NotBlank(message = "Country is required")
-    private String country;
+    @ManyToOne
+    @JoinColumn(name = "country_id", nullable = false)
+    @NotNull(message = "Country is required")
+    private CountryEntity country;
     @NotNull(message = "Trip length is required.")
     @Min(value = 1, message = "Trip length must be at least 1.")
     private int tripLength;

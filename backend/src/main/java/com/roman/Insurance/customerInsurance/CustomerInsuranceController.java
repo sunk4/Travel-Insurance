@@ -39,7 +39,6 @@ public class CustomerInsuranceController {
 
         double totalPrice =
                 insuranceService.calculateInsurancePrice(customerInsuranceRequest.customerDTO().age(),
-                        customerInsuranceRequest.insuranceDTO().continent(),
                         tripLength,
                         customerInsuranceRequest.insuranceDTO().type());
         InsuranceEntity insuranceEntity =

@@ -6,6 +6,7 @@ import com.roman.Insurance.insurance.InsuranceDTO;
 public record CustomerInsuranceRequest(
         CustomerDTO customerDTO,
         InsuranceDTO insuranceDTO
+
 ) {
 
 }

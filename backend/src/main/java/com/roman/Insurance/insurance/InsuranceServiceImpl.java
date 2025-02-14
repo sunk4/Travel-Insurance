@@ -1,7 +1,6 @@
 package com.roman.Insurance.insurance;
 
 import com.roman.Insurance.customer.CustomerEntity;
-import com.roman.Insurance.enums.Continents;
 import com.roman.Insurance.enums.InsuranceType;
 import com.roman.Insurance.enums.StatusOfPayment;
 import lombok.RequiredArgsConstructor;
@@ -54,7 +53,7 @@ public class InsuranceServiceImpl implements InsuranceService {
     }
 
     @Override
-    public double calculateInsurancePrice (int age, Continents continent, int tripLength, InsuranceType type) {
+    public double calculateInsurancePrice (int age,  int tripLength, InsuranceType type) {
         double price = 2.0;
 
         if (age >= 0 && age <= 17) {
@@ -63,27 +62,6 @@ public class InsuranceServiceImpl implements InsuranceService {
             price *= 1.1;
         } else {
             price *= 1.8;
-        }
-
-        switch (continent) {
-            case Africa:
-                price *= 2.5;
-                break;
-            case Antarctica:
-                price *= 3;
-                break;
-            case Asia:
-            case SouthAmerica:
-                price *= 2;
-                break;
-            case Australia:
-                price *= 1.8;
-                break;
-            case NorthAmerica:
-            case Europe:
-                price *= 1.5;
-                break;
-
         }
 
         switch (type) {

@@ -1,6 +1,6 @@
 package com.roman.Insurance.insurance;
 
-import com.roman.Insurance.enums.Continents;
+import com.roman.Insurance.country.CountryDto;
 import com.roman.Insurance.enums.InsuranceType;
 import com.roman.Insurance.enums.StatusOfPayment;
 import jakarta.validation.constraints.FutureOrPresent;
@@ -15,11 +15,8 @@ public record InsuranceDTO(
 
         UUID id,
 
-        @NotNull(message = "Continent is required")
-        Continents continent,
-
-        @NotBlank(message = "Country is required")
-        String country,
+        @NotNull(message = "Country is required")
+        CountryDto country,
 
         int tripLength,
 
