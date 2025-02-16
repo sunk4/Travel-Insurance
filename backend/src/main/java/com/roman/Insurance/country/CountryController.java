@@ -27,11 +27,5 @@ public class CountryController {
         return ResponseEntity.ok(country);
     }
 
-    @PostMapping
-    public ResponseEntity<CountryDto> findCountryByIdAndCalculatedPriceByRiskFactorDateAgeCategory (@RequestBody PriceCalculationRequestDto priceCalculationRequestDto) {
-        CountryDto country = countryService.findCountryByIdAndCalculatedPriceByRiskFactorDateAgeCategory(priceCalculationRequestDto);
-        return ResponseEntity.ok(country);
-    }
-
 
 }

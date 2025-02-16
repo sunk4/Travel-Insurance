@@ -26,10 +26,4 @@ public class InsuranceTypeController {
         return ResponseEntity.ok(insuranceType);
     }
 
-    @PostMapping
-    public ResponseEntity<List<InsuranceTypeDto>> getAllCalculatedInsuranceTypesByDates (@RequestBody InsuranceTypeCalculationDto insuranceTypeCalculationDto) {
-        List<InsuranceTypeDto> insuranceTypes =
-                insuranceTypeService.getAllCalculatedInsuranceTypesByDates(insuranceTypeCalculationDto);
-        return ResponseEntity.ok(insuranceTypes);
-    }
 }
