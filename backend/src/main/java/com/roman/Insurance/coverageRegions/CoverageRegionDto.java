@@ -7,8 +7,8 @@ public record CoverageRegionDto(
         UUID id,
         String name,
         String description,
-        double basePricePerDay,
-        double totalCalculatedPrice,
+        Double basePricePerDay,
+        Double totalCalculatedPrice,
         LocalDateTime createdAt,
         LocalDateTime updatedAt
 

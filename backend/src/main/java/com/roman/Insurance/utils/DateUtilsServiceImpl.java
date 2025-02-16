@@ -12,6 +12,7 @@ public class DateUtilsServiceImpl implements DateUtilsService {
             LocalDate endDate
     ) {
         if (startDate == null || endDate == null) return 0;
-        return startDate.datesUntil(endDate).count();
+        if (startDate.equals(endDate)) return 1;
+        return startDate.datesUntil(endDate).count() + 1;
     }
 }

@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -26,8 +27,9 @@ public class InsuranceTypeController {
     }
 
     @PostMapping
-    public ResponseEntity<List<InsuranceTypeDto>> getAllAndCalculateThePriceOfInsuranceTypes (@RequestBody InsurancePriceCalculationRequest request) {
-        List<InsuranceTypeDto> insuranceTypes = insuranceTypeService.getAllAndCalculateThePriceOfInsuranceTypes(request);
+    public ResponseEntity<List<InsuranceTypeDto>> getAllCalculatedInsuranceTypesByDates (@RequestBody InsuranceTypeCalculationDto insuranceTypeCalculationDto) {
+        List<InsuranceTypeDto> insuranceTypes =
+                insuranceTypeService.getAllCalculatedInsuranceTypesByDates(insuranceTypeCalculationDto);
         return ResponseEntity.ok(insuranceTypes);
     }
 }

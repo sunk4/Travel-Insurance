@@ -1,10 +1,7 @@
 package com.roman.Insurance.insuranceType;
 
 import com.roman.Insurance.ageCategories.AgeCategoryService;
-import com.roman.Insurance.country.CountryDto;
 import com.roman.Insurance.country.CountryService;
-import com.roman.Insurance.coverageRegions.CoverageRegionDto;
-import com.roman.Insurance.riskFactor.RiskFactorDto;
 import com.roman.Insurance.riskFactor.RiskFactorService;
 import com.roman.Insurance.utils.DateUtilsService;
 import lombok.RequiredArgsConstructor;
@@ -37,33 +34,19 @@ public class InsuranceTypeServiceImpl implements InsuranceTypeService {
     }
 
     @Override
-    public List<InsuranceTypeDto> getAllAndCalculateThePriceOfInsuranceTypes (InsurancePriceCalculationRequest request) {
+    public List<InsuranceTypeDto> getAllCalculatedInsuranceTypesByDates (InsuranceTypeCalculationDto insuranceTypeCalculationDto) {
         long days =
-                dateUtilsService.calculateDateDifferenceInDays(request.startDate(), request.endDate());
-
-        CountryDto country = countryService.findCountryById(request.countryId());
-
-             /*TODO
-                   splitni do dvoch servisov - jeden v
-                   InsuranceTypeServiceImpl, druhy v CountryServiceImpl or
-                   CoverageRegion
-                   Zmen InsurancePriceCalculationRequest iba pre InsuranceTypeServiceImpl
-                   Vytvor controller - kde pouzijes obidva service a potom
-                   vrat vystup pre zobrazenie - total price + data z oboch.
-
-
-            */
-        CoverageRegionDto updatedCoverageRegion =
-                country.coverageRegion().withTotalCalculatedPrice(days * country.coverageRegion().basePricePerDay());
+                dateUtilsService.calculateDateDifferenceInDays(insuranceTypeCalculationDto.startDate(),
+                        insuranceTypeCalculationDto.endDate());
+        int amountOfPeople = insuranceTypeCalculationDto.ageCategoryIds().size();
 
         List<InsuranceTypeEntity> insuranceTypes = insuranceTypeRepository.findAll();
         List<InsuranceTypeDto> insuranceTypeDtos = insuranceTypeMapper.entityListToDto(insuranceTypes);
 
-        List<InsuranceTypeDto> updatedInsuranceTypeDtos = insuranceTypeDtos.stream().map(insuranceTypeDto -> {
-            double totalCalculatedPrice = days * insuranceTypeDto.basePricePerDay();
+        return insuranceTypeDtos.stream().map(insuranceTypeDto -> {
+            double totalCalculatedPrice =
+                    Math.round((days * insuranceTypeDto.basePricePerDay() * amountOfPeople) * 100.0) / 100.0;
             return insuranceTypeDto.withTotalCalculatedPrice(totalCalculatedPrice);
         }).toList();
-
-        return updatedInsuranceTypeDtos;
     }
 }

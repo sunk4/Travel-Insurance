@@ -6,7 +6,7 @@ import java.util.UUID;
 public record RiskFactorDto(
     UUID id,
     String name,
-    int riskFactor,
+    double riskFactor,
     LocalDateTime createdAt,
     LocalDateTime updatedAt
 ) {

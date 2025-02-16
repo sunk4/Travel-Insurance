@@ -30,9 +30,8 @@ public class RiskFactorEntity {
     @NotBlank(message = "Name is required")
     private String name;
     @NotNull(message = "Risk factor is required")
-    @Min(value = 1, message = "Risk factor must be at least 1.")
-    @Max(value = 10, message = "Risk factor must be at most 10.")
-    private Double riskFactor;
+
+    private double riskFactor;
 
     @CreatedDate
     @Column(nullable = false, updatable = false)

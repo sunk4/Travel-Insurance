@@ -1,7 +1,10 @@
 package com.roman.Insurance.ageCategories;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Null;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,8 +13,6 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -34,14 +35,12 @@ public class AgeCategoryEntity {
     @Min(value = 0, message = "Min age must be at least 0.")
     private Integer minAge;
 
-    @Null(message = "Max age is required")
     @Min(value = 1, message = "Max age must be at least 1.")
     private Integer maxAge;
 
 
     @NotNull(message = "Price factor is required")
-    @DecimalMin(value = "0.10", message = "Base price per day must be at least 0.10")
-    private BigDecimal priceFactor;
+    private double priceFactor;
 
     @CreatedDate
     @Column(nullable = false, updatable = false)

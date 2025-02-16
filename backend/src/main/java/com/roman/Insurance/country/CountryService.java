@@ -10,4 +10,6 @@ public interface CountryService {
     List<CountryDto> findAllCountries();
 
     CountryDto findCountryById (UUID id);
+
+    CountryDto findCountryByIdAndCalculatedPriceByRiskFactorDateAgeCategory (PriceCalculationRequestDto priceCalculationRequestDto);
 }
