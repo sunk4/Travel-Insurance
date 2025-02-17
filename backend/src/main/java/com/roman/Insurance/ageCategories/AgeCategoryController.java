@@ -17,7 +17,6 @@ public class AgeCategoryController {
 
     @GetMapping
     public ResponseEntity<List<AgeCategoryDto>> getAllAgeCategories () {
-        System.out.println("hmm???");
         List<AgeCategoryDto> ageCategories = ageCategoryService.getAllAgeCategories();
         return ResponseEntity.ok(ageCategories);
     }

@@ -12,12 +12,20 @@ INSERT INTO risk_factors (id, name, risk_factor, created_at, updated_at) VALUES
 ('4cc092e9-37c3-431d-ab47-38c860de5121', 'Manuálna práca',1.8, NOW(), NOW())
 ON CONFLICT (id) DO NOTHING;
 
-INSERT INTO insurance_types (id, name, description, base_price_per_day, created_at, updated_at) VALUES
-('06ccaaf0-ad9e-451a-9f52-f8379ba3518c', 'Poistenie mimoriadnej situácie (Pandémia)', 'Uhradíme vám liečbu pandemického a epidemického ochorenia (napr. COVID-19 a iné) aj v rizikových krajinách a naviac vám poskytneme extra ochranu v prípade ďalších mimoriadnych udalostí.', 0.80, NOW(), NOW()),
-('452c53b1-b490-4ccc-be4e-f7a3e0878501', 'Cestovné doklady', 'Uhradíme vám náklady spojené so stratou, zničením či odcudzením cestovných dokladov.', 0.50, NOW(), NOW()),
-('34158c67-4fc7-463c-8a78-815faa44e79d', 'Batožina', 'Poistenie kryje poškodenie, zničenie, odcudzenie, alebo stratu vecí osobnej potreby.', 0.70, NOW(), NOW()),
-('8b1a9d87-6cbc-4b42-85a7-8d59292c5ef3', 'Zodpovednosť za škodu', 'Dôležité poistenie, ktoré vám preplatí vysoké účty za škodu, ktorú niekomu spôsobíte.', 0.15, NOW(), NOW()),
-('1759e792-d762-4864-a4aa-a3b62524ad1f', 'Úraz', 'Vyplatíme vám odškodnenie v prípade trvalých následkov alebo smrti v dôsledku úrazu.', 0.25, NOW(), NOW())
+INSERT INTO insurance_types (id, name, description, base_price_per_day, is_additional_insurance, is_price_total, created_at, updated_at) VALUES
+('06ccaaf0-ad9e-451a-9f52-f8379ba3518c', 'Poistenie mimoriadnej situácie (Pandémia)', 'Uhradíme vám liečbu pandemického a epidemického ochorenia (napr. COVID-19 a iné) aj v rizikových krajinách a naviac vám poskytneme extra ochranu v prípade ďalších mimoriadnych udalostí.', 0.80, false,false ,NOW(), NOW()),
+('452c53b1-b490-4ccc-be4e-f7a3e0878501', 'Cestovné doklady', 'Uhradíme vám náklady spojené so stratou, zničením či odcudzením cestovných dokladov.', 0.50, false,false, NOW(), NOW()),
+('34158c67-4fc7-463c-8a78-815faa44e79d', 'Batožina', 'Poistenie kryje poškodenie, zničenie, odcudzenie, alebo stratu vecí osobnej potreby.', 0.70, false,false, NOW(), NOW()),
+('8b1a9d87-6cbc-4b42-85a7-8d59292c5ef3', 'Zodpovednosť za škodu', 'Dôležité poistenie, ktoré vám preplatí vysoké účty za škodu, ktorú niekomu spôsobíte.', 0.15, false,false, NOW(), NOW()),
+('1759e792-d762-4864-a4aa-a3b62524ad1f', 'Úraz', 'Vyplatíme vám odškodnenie v prípade trvalých následkov alebo smrti v dôsledku úrazu.', 0.25, false,false, NOW(), NOW()),
+('48fa1fb8-1d54-41ce-b34f-b7cf31c82c38', 'Náklady na technickú pomoc pri záchrannej akcii', 'Chránime vás pred vysokými účtami za prevoz vrtulníkom alebo sanitkou, vyslobodzovanie. ',0.60, true,false, NOW(), NOW()),
+('be5c37a6-8e71-4cf2-bb8a-0066264e9c9b', 'Nečakaný pobyt v nemocnici', 'Odškodníme vás za každý deň hospitalizácie alebo pripútania na lôžko v zahraničí.', 0.50, true, false, NOW(), NOW()),
+('b846ddd8-b961-4b67-8a24-a658da70e538', 'Asistenčné služby pre bicykle a kolobežky', 'Pomoc pre cyklistov v prípade nehody, poruchy alebo krádeže bicykla, elektrobicykla, kolobežky či elektrokolobežky, a ďalšie obľúbené služby.', 0.90, true, false, NOW(), NOW()),
+('f88b4a91-122e-4f11-aaee-4aed3f83675b', 'Elektronické zariadenia', 'Poistenie kryje elektronické zariadenia pre prípad poškodenia, zničenia a odcudzenia až do výšky 1 000 EUR.',1.99, true, false, NOW(), NOW()),
+('e69a4e10-ac4e-4577-97d1-8756f09de6e3', 'Storno EXTRA', 'Uhradíme vám stornopoplatok (odstupné), ktoré vám vyúčtovala cestovná kancelária, dopravná spoločnosť, ubytovacie zariadenie alebo iný poskytovateľ služby, v prípade, že budete musieť svoju cestu a pobyt zo závažných dôvodov zrušiť.', 21.00, true,true, NOW(), NOW()),
+('3e5fc9ff-00b2-4c72-971a-539b5e8e321c', 'Opustená domácnosť', 'Kým ste odcestovaní, budete mať poistenú vašu domácnosť až do výšky 20 000 eur.', 0.55, true, true, NOW(), NOW()),
+('156ac62a-6d76-4be4-9371-45ba5b0c344c',  'Domáci miláčik', 'Poistenie kryje nevyhnutné liečebené náklady spojené s úrazom alebo akútnym ochorením domáceho miláčika v zahraničí.', 0.75,true, true, NOW(), NOW()),
+('4c839d85-cfe0-4416-a0e9-970c9514e1dc', 'Asistenčné služby pre motorové vozidlo', 'Pomôžeme vám v prípade poruchy, nehody alebo dopravnej nehody vozidla: odťah, oprava vozidla, náhradné vozidlo až na 10 dní, náhradná doprava, ubytovanie a ďalšie obľúbené služby, a to až do výšky 2 500 €.', 2.49, true, true, NOW(), NOW())
 ON CONFLICT (id) DO NOTHING;
 
 INSERT INTO age_categories (id, name, min_age, max_age, price_factor, created_at, updated_at) VALUES

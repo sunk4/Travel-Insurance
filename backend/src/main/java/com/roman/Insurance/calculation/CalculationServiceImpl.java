@@ -19,8 +19,15 @@ public class CalculationServiceImpl implements CalculationService {
     @Override
     public CalculationDto calculatePrice (CalculationRequestDto calculationRequestDto) {
         CountryDto countryDto = countryService.findCountryByIdAndCalculatedPriceByRiskFactorDateAgeCategory(calculationRequestDto.priceCalculationRequestDto());
-        List<InsuranceTypeDto> insuranceTypes = insuranceTypeService.getAllCalculatedInsuranceTypesByDates(calculationRequestDto.insuranceTypeCalculationDto());
+        List<InsuranceTypeDto> insuranceTypes =
+                insuranceTypeService.getAllCalculatedInsuranceTypesByDates(calculationRequestDto.insuranceTypeCalculationDto());
+        List<InsuranceTypeDto> pickedInsuranceTypes =
+                insuranceTypeService.getPickedInsuranceTypes(calculationRequestDto.pickedInsuranceTypesDto(), insuranceTypes);
+        double totalCalculatedPrice =
+                pickedInsuranceTypes.stream().mapToDouble(InsuranceTypeDto::totalCalculatedPrice).sum() + countryDto.coverageRegion().totalCalculatedPrice();
 
-        return new CalculationDto(countryDto, insuranceTypes);
+        return new CalculationDto(countryDto, insuranceTypes,
+                pickedInsuranceTypes,
+                totalCalculatedPrice);
     }
 }

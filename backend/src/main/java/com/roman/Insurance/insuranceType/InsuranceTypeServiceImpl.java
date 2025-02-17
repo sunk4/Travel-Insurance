@@ -1,6 +1,7 @@
 package com.roman.Insurance.insuranceType;
 
 import com.roman.Insurance.ageCategories.AgeCategoryService;
+import com.roman.Insurance.calculation.PickedInsuranceTypesDto;
 import com.roman.Insurance.country.CountryService;
 import com.roman.Insurance.riskFactor.RiskFactorService;
 import com.roman.Insurance.utils.DateUtilsService;
@@ -44,9 +45,23 @@ public class InsuranceTypeServiceImpl implements InsuranceTypeService {
         List<InsuranceTypeDto> insuranceTypeDtos = insuranceTypeMapper.entityListToDto(insuranceTypes);
 
         return insuranceTypeDtos.stream().map(insuranceTypeDto -> {
-            double totalCalculatedPrice =
-                    Math.round((days * insuranceTypeDto.basePricePerDay() * amountOfPeople) * 100.0) / 100.0;
+            double totalCalculatedPrice;
+            if (insuranceTypeDto.isPriceTotal()) {
+                totalCalculatedPrice =
+                        Math.round((insuranceTypeDto.basePricePerDay()) * 100.0) / 100.0;
+            } else if (insuranceTypeDto.isAdditionalInsurance()) {
+                totalCalculatedPrice = Math.round((insuranceTypeDto.basePricePerDay() * amountOfPeople) * 100.0) / 100.0;
+            } else {
+                totalCalculatedPrice = Math.round((days * insuranceTypeDto.basePricePerDay() * amountOfPeople) * 100.0) / 100.0;
+            }
             return insuranceTypeDto.withTotalCalculatedPrice(totalCalculatedPrice);
+
         }).toList();
+    }
+
+    @Override
+    public List<InsuranceTypeDto> getPickedInsuranceTypes (PickedInsuranceTypesDto pickedInsuranceTypesDto, List<InsuranceTypeDto> insuranceTypes) {
+        List<InsuranceTypeDto> pickedInsuranceTypesByUser = insuranceTypes.stream().filter(insuranceTypeDto -> pickedInsuranceTypesDto.insuranceTypes().contains(insuranceTypeDto.id())).toList();
+        return pickedInsuranceTypesByUser;
     }
 }

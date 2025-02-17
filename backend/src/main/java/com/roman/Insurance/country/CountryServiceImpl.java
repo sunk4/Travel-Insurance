@@ -67,7 +67,9 @@ public class CountryServiceImpl implements CountryService {
         CoverageRegionDto countryWithCalculatedPrice =
                 countryDto.coverageRegion().withTotalCalculatedPrice(Math.round(totalCalculatedPrice * 100.0) / 100.0);
 
-        return new CountryDto(countryDto.id(), countryDto.name(), countryWithCalculatedPrice, countryDto.createdAt(), countryDto.updatedAt());
+        return new CountryDto(countryDto.id(), countryDto.name(),
+                countryWithCalculatedPrice, days, countryDto.createdAt(),
+                countryDto.updatedAt());
 
     }
 

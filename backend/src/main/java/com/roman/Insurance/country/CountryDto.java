@@ -9,10 +9,10 @@ public record CountryDto(
         UUID id,
         String name,
         CoverageRegionDto coverageRegion,
+        long days,
         LocalDateTime createdAt,
 
         LocalDateTime updatedAt
 ) {
-
 
 }

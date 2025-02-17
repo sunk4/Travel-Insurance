@@ -35,6 +35,12 @@ public class InsuranceTypeEntity {
     @NotNull(message = "Base price per day is required")
     private double basePricePerDay;
 
+    @NotNull(message = "Is additional insurance is required")
+    private Boolean isAdditionalInsurance;
+
+    @NotNull(message = "Is price total is required")
+    private Boolean isPriceTotal;
+
     @CreatedDate
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;

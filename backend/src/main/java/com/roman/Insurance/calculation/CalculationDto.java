@@ -6,5 +6,7 @@ import com.roman.Insurance.insuranceType.InsuranceTypeDto;
 import java.util.List;
 
 public record CalculationDto(CountryDto country,
-                             List<InsuranceTypeDto> insuranceTypes) {
+                             List<InsuranceTypeDto> insuranceTypes,
+                             List<InsuranceTypeDto> pickedInsuranceTypes,
+                             double totalCalculatedPrice) {
 }

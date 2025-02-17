@@ -9,10 +9,14 @@ public record InsuranceTypeDto
          String description,
          double basePricePerDay,
          double totalCalculatedPrice,
+         Boolean isAdditionalInsurance,
+         Boolean isPriceTotal,
          LocalDateTime createdAt,
          LocalDateTime updatedAt) {
     public InsuranceTypeDto withTotalCalculatedPrice (double totalCalculatedPrice) {
         return new InsuranceTypeDto(id, name, description, basePricePerDay,
-                totalCalculatedPrice, createdAt, updatedAt);
+                totalCalculatedPrice, isAdditionalInsurance, isPriceTotal,
+                createdAt,
+                updatedAt);
     }
 }

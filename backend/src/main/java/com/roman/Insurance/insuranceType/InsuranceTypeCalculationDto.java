@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.UUID;
 
 public record InsuranceTypeCalculationDto(LocalDate startDate,
-                                          LocalDate endDate, List<UUID> ageCategoryIds) {
+                                          LocalDate endDate,
+                                          List<UUID> ageCategoryIds) {
 
 }
