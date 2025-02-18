@@ -1,5 +1,6 @@
 package com.roman.Insurance.customer;
 
+import com.roman.Insurance.encryption.EncryptionService;
 import com.roman.Insurance.insurance.InsuranceEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -13,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import com.roman.Insurance.encryption.EncryptionService;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -95,8 +95,5 @@ public class CustomerEntity {
     @LastModifiedDate
     @Column(insertable = false)
     private LocalDateTime updatedAt;
-
-
-
 
 }

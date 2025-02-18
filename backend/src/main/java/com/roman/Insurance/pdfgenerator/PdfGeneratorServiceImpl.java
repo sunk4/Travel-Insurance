@@ -75,7 +75,6 @@ public class PdfGeneratorServiceImpl implements PdfGeneratorService {
                     normalFont)));
 
             table.addCell(new PdfPCell(new Phrase("Insurance Type:", headerFont)));
-            table.addCell(new PdfPCell(new Phrase(String.valueOf(insuranceEntity.getType()), normalFont)));
 
             table.addCell(new PdfPCell(new Phrase("Continent:", headerFont)));
 

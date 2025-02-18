@@ -1,14 +1,14 @@
 package com.roman.Insurance.insurance;
 
 import com.roman.Insurance.country.CountryDto;
-import com.roman.Insurance.enums.InsuranceType;
 import com.roman.Insurance.enums.StatusOfPayment;
+import com.roman.Insurance.insuranceType.InsuranceTypeDto;
 import jakarta.validation.constraints.FutureOrPresent;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 public record InsuranceDTO(
@@ -27,8 +27,8 @@ public record InsuranceDTO(
         @NotNull
         @FutureOrPresent(message = "End date must be today or in the future.")
         LocalDate endDate,
-        @NotNull(message = "Insurance type is required")
-        InsuranceType type,
+
+        List<InsuranceTypeDto> insuranceTypes,
 
         StatusOfPayment statusOfPayment,
 

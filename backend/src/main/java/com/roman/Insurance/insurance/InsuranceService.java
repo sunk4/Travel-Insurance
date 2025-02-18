@@ -1,7 +1,6 @@
 package com.roman.Insurance.insurance;
 
 import com.roman.Insurance.customer.CustomerEntity;
-import com.roman.Insurance.enums.InsuranceType;
 import com.roman.Insurance.enums.StatusOfPayment;
 
 import java.util.UUID;
@@ -18,7 +17,6 @@ public interface InsuranceService {
 
     void updateUrlInsurancePreview (UUID id, String urlInsurancePreview);
 
-    double calculateInsurancePrice (int age, int tripLength, InsuranceType type);
 
     InsuranceEntity getInsuranceById (UUID id);
 }

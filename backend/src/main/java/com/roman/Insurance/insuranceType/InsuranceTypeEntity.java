@@ -1,5 +1,6 @@
 package com.roman.Insurance.insuranceType;
 
+import com.roman.Insurance.insurance.InsuranceEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -12,6 +13,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -40,6 +42,9 @@ public class InsuranceTypeEntity {
 
     @NotNull(message = "Is price total is required")
     private Boolean isPriceTotal;
+
+    @ManyToMany(mappedBy = "insuranceTypes")
+    private List<InsuranceEntity> insurances;
 
     @CreatedDate
     @Column(nullable = false, updatable = false)

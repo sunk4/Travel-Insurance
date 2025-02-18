@@ -2,8 +2,8 @@ package com.roman.Insurance.insurance;
 
 import com.roman.Insurance.country.CountryEntity;
 import com.roman.Insurance.customer.CustomerEntity;
-import com.roman.Insurance.enums.InsuranceType;
 import com.roman.Insurance.enums.StatusOfPayment;
+import com.roman.Insurance.insuranceType.InsuranceTypeEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
@@ -16,6 +16,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -44,9 +45,13 @@ public class InsuranceEntity {
     @FutureOrPresent(message = "End date must be today or in the future.")
     private LocalDate endDate;
 
-    @Enumerated(EnumType.STRING)
-    @NotNull(message = "Insurance type is required")
-    private InsuranceType type;
+    @ManyToMany
+    @JoinTable(
+            name = "insurance_insurance_type",
+            joinColumns = @JoinColumn(name = "insurance_id"),
+            inverseJoinColumns = @JoinColumn(name = "insurance_type_id")
+    )
+    private List<InsuranceTypeEntity> insuranceTypes;
 
     @Enumerated(EnumType.STRING)
     @NotNull
