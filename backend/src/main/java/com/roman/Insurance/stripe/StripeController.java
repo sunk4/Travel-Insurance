@@ -1,7 +1,7 @@
 package com.roman.Insurance.stripe;
 
-import com.roman.Insurance.customer.CustomerEntity;
-import com.roman.Insurance.customer.CustomerService;
+import com.roman.Insurance.customer.MainCustomerService;
+import com.roman.Insurance.customer.MainCustomerEntity;
 import com.roman.Insurance.email.EmailService;
 import com.roman.Insurance.enums.StatusOfPayment;
 import com.roman.Insurance.insurance.InsuranceEntity;
@@ -35,7 +35,7 @@ public class StripeController {
     private final EmailService emailService;
     private final PdfGeneratorService pdfGeneratorService;
     private final UploadService uploadService;
-    private final CustomerService customerService;
+    private final MainCustomerService customerService;
 
     @PostMapping("/webhook")
     public ResponseEntity<String> handleStripeWebhook (
@@ -59,7 +59,7 @@ public class StripeController {
                 InsuranceEntity insurance =
                         insuranceService.updateStatusOfPayment(insuranceId,
                                 StatusOfPayment.PAID);
-                CustomerEntity customer =
+                MainCustomerEntity customer =
                         customerService.getCustomerById(customerId);
 
                 byte[] pdf = pdfGeneratorService.generatePdf(customer,

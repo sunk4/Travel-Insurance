@@ -1,6 +1,6 @@
 package com.roman.Insurance.insurance;
 
-import com.roman.Insurance.customer.CustomerEntity;
+import com.roman.Insurance.customer.MainCustomerEntity;
 import com.roman.Insurance.enums.StatusOfPayment;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,7 +16,7 @@ public class InsuranceServiceImpl implements InsuranceService {
     @Override
     public InsuranceEntity createInsurance (
             InsuranceDTO insuranceDTO,
-            CustomerEntity customerEntity,
+            MainCustomerEntity customerEntity,
             double totalPrice, int tripLength
     ) {
         InsuranceEntity insuranceEntity = insuranceMapper.toEntity(insuranceDTO);

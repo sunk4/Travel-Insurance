@@ -1,11 +1,8 @@
 package com.roman.Insurance.insuranceType;
 
-import com.roman.Insurance.ageCategories.AgeCategoryService;
 import com.roman.Insurance.calculation.InsuranceCalculationResponse;
 import com.roman.Insurance.calculation.PickedInsuranceTypesDto;
 import com.roman.Insurance.country.CountryDto;
-import com.roman.Insurance.country.CountryService;
-import com.roman.Insurance.riskFactor.RiskFactorService;
 import com.roman.Insurance.utils.DateUtilsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,9 +16,6 @@ public class InsuranceTypeServiceImpl implements InsuranceTypeService {
     private final InsuranceTypeRepository insuranceTypeRepository;
     private final InsuranceTypeMapper insuranceTypeMapper;
     private final DateUtilsService dateUtilsService;
-    private final RiskFactorService riskFactorService;
-    private final AgeCategoryService ageCategoryService;
-    private final CountryService countryService;
 
     @Override
     public List<InsuranceTypeDto> getAllInsuranceTypes () {

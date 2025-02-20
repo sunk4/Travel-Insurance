@@ -4,7 +4,7 @@ import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import com.roman.Insurance.customer.CustomerEntity;
+import com.roman.Insurance.customer.MainCustomerEntity;
 import com.roman.Insurance.encryption.EncryptionService;
 import com.roman.Insurance.insurance.InsuranceEntity;
 import lombok.RequiredArgsConstructor;
@@ -20,8 +20,8 @@ public class PdfGeneratorServiceImpl implements PdfGeneratorService {
     private final EncryptionService encryptionService;
 
     @Override
-    public byte[] generatePdf (CustomerEntity customerEntity, InsuranceEntity insuranceEntity) throws Exception {
-        CustomerEntity decryptedCustomer = encryptionService.decrypt(customerEntity);
+    public byte[] generatePdf (MainCustomerEntity customerEntity, InsuranceEntity insuranceEntity) throws Exception {
+        MainCustomerEntity decryptedCustomer = encryptionService.decrypt(customerEntity);
 
         try (ByteArrayOutputStream pdfStream = new ByteArrayOutputStream()) {
             Document document = new Document(PageSize.A4, 50, 50, 50, 50);

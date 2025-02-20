@@ -1,6 +1,6 @@
 package com.roman.Insurance.insurance;
 
-import com.roman.Insurance.customer.CustomerEntity;
+import com.roman.Insurance.customer.MainCustomerEntity;
 import com.roman.Insurance.enums.StatusOfPayment;
 
 import java.util.UUID;
@@ -8,7 +8,7 @@ import java.util.UUID;
 public interface InsuranceService {
     InsuranceEntity createInsurance (
             InsuranceDTO insuranceDTO,
-            CustomerEntity customerEntity, double totalPrice, int tripLength
+            MainCustomerEntity customerEntity, double totalPrice, int tripLength
     );
 
     InsuranceEntity updateStatusOfPayment (UUID id, StatusOfPayment statusOfPayment);

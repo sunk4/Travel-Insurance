@@ -1,6 +1,6 @@
 package com.roman.Insurance.encryption;
 
-import com.roman.Insurance.customer.CustomerEntity;
+import com.roman.Insurance.customer.MainCustomerEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -11,9 +11,9 @@ public class EncryptionServiceImpl implements EncryptionService {
     private final EncryptionUtil encryption;
 
     @Override
-    public CustomerEntity encrypt(CustomerEntity customerEntity) throws Exception {
+    public MainCustomerEntity encrypt(MainCustomerEntity customerEntity) throws Exception {
         if (customerEntity.getFirstName() != null) {
-            customerEntity.setEncryptedFistName(encryption.encrypt(customerEntity.getFirstName()));
+            customerEntity.setEncryptedFirstName(encryption.encrypt(customerEntity.getFirstName()));
         }
         if (customerEntity.getLastName() != null) {
             customerEntity.setEncryptedLastName(encryption.encrypt(customerEntity.getLastName()));
@@ -43,9 +43,9 @@ public class EncryptionServiceImpl implements EncryptionService {
     }
 
     @Override
-    public CustomerEntity decrypt(CustomerEntity customerEntity) throws Exception {
-        if (customerEntity.getEncryptedFistName() != null) {
-            customerEntity.setFirstName(encryption.decrypt(customerEntity.getEncryptedFistName()));
+    public MainCustomerEntity decrypt(MainCustomerEntity customerEntity) throws Exception {
+        if (customerEntity.getEncryptedFirstName() != null) {
+            customerEntity.setFirstName(encryption.decrypt(customerEntity.getEncryptedFirstName()));
         }
         if (customerEntity.getEncryptedLastName() != null) {
             customerEntity.setLastName(encryption.decrypt(customerEntity.getEncryptedLastName()));

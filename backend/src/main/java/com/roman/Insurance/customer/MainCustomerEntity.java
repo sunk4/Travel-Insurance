@@ -1,16 +1,14 @@
 package com.roman.Insurance.customer;
 
-import com.roman.Insurance.encryption.EncryptionService;
 import com.roman.Insurance.insurance.InsuranceEntity;
+import com.roman.Insurance.insuredPerson.InsuredPersonEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -25,18 +23,14 @@ import java.util.UUID;
 @NoArgsConstructor
 @Builder
 @Data
-@Table(name = "customers")
-public class CustomerEntity {
-
-    @Transient
-    @Autowired
-    private transient EncryptionService encryptionService;
+@Table(name = "main_customers")
+public class MainCustomerEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    private String encryptedFistName;
+    private String encryptedFirstName;
 
     private String encryptedLastName;
 
@@ -63,7 +57,6 @@ public class CustomerEntity {
     @Transient
     @NotBlank(message = "Email is required")
     @Email(message = "Invalid email format")
-    @Column(unique = true)
     private String email;
     @Transient
     @NotBlank(message = "Phone number is required")
@@ -83,11 +76,12 @@ public class CustomerEntity {
     @Transient
     @NotBlank(message = "Personal identification number is required")
     private String personalIdentificationNumber;
-    @NotNull(message = "Age is required")
-    private int age;
 
     @OneToMany(mappedBy = "customer")
     private List<InsuranceEntity> insurances;
+
+    @OneToMany(mappedBy = "mainCustomer", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<InsuredPersonEntity> insuredPersons;
 
     @CreatedDate
     @Column(nullable = false, updatable = false)

@@ -1,7 +1,7 @@
 package com.roman.Insurance.insurance;
 
 import com.roman.Insurance.country.CountryEntity;
-import com.roman.Insurance.customer.CustomerEntity;
+import com.roman.Insurance.customer.MainCustomerEntity;
 import com.roman.Insurance.enums.StatusOfPayment;
 import com.roman.Insurance.insuranceType.InsuranceTypeEntity;
 import jakarta.persistence.*;
@@ -64,8 +64,8 @@ public class InsuranceEntity {
     private String urlInsurancePayed;
 
     @ManyToOne
-    @JoinColumn(name = "customer_id")
-    private CustomerEntity customer;
+    @JoinColumn(name = "main_customer_id")
+    private MainCustomerEntity customer;
 
     @CreatedDate
     @Column(nullable = false, updatable = false)

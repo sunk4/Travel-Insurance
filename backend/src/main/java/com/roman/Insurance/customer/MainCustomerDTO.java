@@ -1,13 +1,14 @@
 package com.roman.Insurance.customer;
 
+import com.roman.Insurance.insuredPerson.InsuredPersonDTO;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
-public record CustomerDTO(
+public record MainCustomerDTO(
         UUID id,
 
         @NotBlank(message = "First name is required")
@@ -38,9 +39,7 @@ public record CustomerDTO(
         @NotBlank(message = "Personal identification number is required")
         String personalIdentificationNumber,
 
-        @NotNull(message = "Age is required")
-        int age,
-
+        List<InsuredPersonDTO> insuredPersons,
 
         LocalDateTime createdAt,
 
