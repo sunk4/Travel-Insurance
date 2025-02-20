@@ -31,7 +31,7 @@ public class CustomerInsuranceController {
     private final StripeService stripeService;
 
     @PostMapping
-    public ResponseEntity<byte[]> createCustomerInsurance (@Valid @RequestBody CustomerInsuranceRequest customerInsuranceRequest) throws Exception {
+    public ResponseEntity<Void> createCustomerInsurance (@Valid @RequestBody CustomerInsuranceRequest customerInsuranceRequest){
 
         return null;
 

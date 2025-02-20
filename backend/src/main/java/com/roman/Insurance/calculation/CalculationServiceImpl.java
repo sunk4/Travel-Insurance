@@ -21,13 +21,12 @@ public class CalculationServiceImpl implements CalculationService {
         CountryDto countryDto = countryService.findCountryByIdAndCalculatedPriceByRiskFactorDateAgeCategory(calculationRequestDto.priceCalculationRequestDto());
         List<InsuranceTypeDto> insuranceTypes =
                 insuranceTypeService.getAllCalculatedInsuranceTypesByDates(calculationRequestDto.insuranceTypeCalculationDto());
-        List<InsuranceTypeDto> pickedInsuranceTypes =
-                insuranceTypeService.getPickedInsuranceTypes(calculationRequestDto.pickedInsuranceTypesDto(), insuranceTypes);
-        double totalCalculatedPrice =
-                pickedInsuranceTypes.stream().mapToDouble(InsuranceTypeDto::totalCalculatedPrice).sum() + countryDto.coverageRegion().totalCalculatedPrice();
+        InsuranceCalculationResponse pickedInsuranceTypes =
+                insuranceTypeService.getPickedInsuranceTypes(calculationRequestDto.pickedInsuranceTypesDto(), insuranceTypes,countryDto);
+
 
         return new CalculationDto(countryDto, insuranceTypes,
-                pickedInsuranceTypes,
-                totalCalculatedPrice);
+                pickedInsuranceTypes.pickedInsuranceTypes(), pickedInsuranceTypes.totalCalculatedPrice()
+                );
     }
 }

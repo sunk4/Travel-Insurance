@@ -1,7 +1,9 @@
 package com.roman.Insurance.insuranceType;
 
 import com.roman.Insurance.ageCategories.AgeCategoryService;
+import com.roman.Insurance.calculation.InsuranceCalculationResponse;
 import com.roman.Insurance.calculation.PickedInsuranceTypesDto;
+import com.roman.Insurance.country.CountryDto;
 import com.roman.Insurance.country.CountryService;
 import com.roman.Insurance.riskFactor.RiskFactorService;
 import com.roman.Insurance.utils.DateUtilsService;
@@ -60,8 +62,10 @@ public class InsuranceTypeServiceImpl implements InsuranceTypeService {
     }
 
     @Override
-    public List<InsuranceTypeDto> getPickedInsuranceTypes (PickedInsuranceTypesDto pickedInsuranceTypesDto, List<InsuranceTypeDto> insuranceTypes) {
+    public InsuranceCalculationResponse getPickedInsuranceTypes (PickedInsuranceTypesDto pickedInsuranceTypesDto, List<InsuranceTypeDto> insuranceTypes, CountryDto countryDto) {
         List<InsuranceTypeDto> pickedInsuranceTypesByUser = insuranceTypes.stream().filter(insuranceTypeDto -> pickedInsuranceTypesDto.insuranceTypes().contains(insuranceTypeDto.id())).toList();
-        return pickedInsuranceTypesByUser;
+        double totalCalculatedPrice =
+                pickedInsuranceTypesByUser.stream().mapToDouble(InsuranceTypeDto::totalCalculatedPrice).sum() + countryDto.coverageRegion().totalCalculatedPrice();
+        return new InsuranceCalculationResponse(pickedInsuranceTypesByUser, totalCalculatedPrice);
     }
 }

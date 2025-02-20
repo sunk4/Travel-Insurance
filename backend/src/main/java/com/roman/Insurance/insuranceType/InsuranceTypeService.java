@@ -1,6 +1,8 @@
 package com.roman.Insurance.insuranceType;
 
+import com.roman.Insurance.calculation.InsuranceCalculationResponse;
 import com.roman.Insurance.calculation.PickedInsuranceTypesDto;
+import com.roman.Insurance.country.CountryDto;
 
 import java.util.List;
 import java.util.UUID;
@@ -12,5 +14,5 @@ public interface InsuranceTypeService {
 
     List<InsuranceTypeDto> getAllCalculatedInsuranceTypesByDates (InsuranceTypeCalculationDto insuranceTypeCalculationDto);
 
-    List<InsuranceTypeDto> getPickedInsuranceTypes (PickedInsuranceTypesDto pickedInsuranceTypesDto, List<InsuranceTypeDto> insuranceTypes);
+    InsuranceCalculationResponse getPickedInsuranceTypes (PickedInsuranceTypesDto pickedInsuranceTypesDto, List<InsuranceTypeDto> insuranceTypes, CountryDto countryDto);
 }
