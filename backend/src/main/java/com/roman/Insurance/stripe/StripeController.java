@@ -56,27 +56,28 @@ public class StripeController {
                 UUID insuranceId = UUID.fromString(session.getMetadata().get("insuranceId"));
                 UUID customerId = UUID.fromString(session.getMetadata().get("customerId"));
 
-                InsuranceEntity insurance =
-                        insuranceService.updateStatusOfPayment(insuranceId,
-                                StatusOfPayment.PAID);
+//                InsuranceEntity insurance =
+//                        insuranceService.updateStatusOfPayment(insuranceId,
+//                                StatusOfPayment.PAID);
                 MainCustomerEntity customer =
                         customerService.getCustomerById(customerId);
 
-                byte[] pdf = pdfGeneratorService.generatePdf(customer,
-                        insurance);
-                String url = uploadService.uploadFileToS3(pdf,
-                        "PaymentConfirmation_" + ".pdf");
-                insuranceService.updateUrlInsurancePayed(insuranceId, url);
+//                byte[] pdf = pdfGeneratorService.generatePdf(customer,
+//                        insurance);
+//                String url = uploadService.uploadFileToS3(pdf,
+//                        "PaymentConfirmation_" + ".pdf");
+////                insuranceService.updateUrlInsurancePayed(insuranceId, url);
+//
+//                String customerEmail = session.getCustomerDetails().getEmail();
+//                emailService.sendEmailWithConfirmationAndAttachment(
+//                        customerEmail,
+//                        "Payment Confirmation",
+//                        "emailTemplatePayed",
+//                        pdf,
+//                        "PaymentConfirmation_" + ".pdf"
 
-                String customerEmail = session.getCustomerDetails().getEmail();
-                emailService.sendEmailWithConfirmationAndAttachment(
-                        customerEmail,
-                        "Payment Confirmation",
-                        "emailTemplatePayed",
-                        pdf,
-                        "PaymentConfirmation_" + ".pdf"
+//                );
 
-                );
             }
 
             return ResponseEntity.ok("Webhook processed");

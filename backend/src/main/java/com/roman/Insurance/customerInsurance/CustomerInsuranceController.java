@@ -33,10 +33,16 @@ public class CustomerInsuranceController {
     public ResponseEntity<Void> createTravelInsurance (@RequestBody CustomerTravelInsuranceRequest customerTravelInsuranceRequest) throws Exception {
         System.out.println(customerTravelInsuranceRequest);
         UUID mainCustomerId = customerService.createMainCustomer(customerTravelInsuranceRequest.mainCustomerDto());
-        System.out.println(customerTravelInsuranceRequest);
+
+        UUID insuranceId =
+                insuranceService.createInsurance(customerTravelInsuranceRequest.insuranceDTO(),mainCustomerId);
+
+
         List<UUID> insuredPersonIds =
-                insurePersonService.createInsuredPerson(customerTravelInsuranceRequest.insuredPersonDTO(), mainCustomerId);
-        System.out.println(insuredPersonIds);
+                insurePersonService.createInsuredPerson(customerTravelInsuranceRequest.insuredPersonDTO());
+
+
+
         return null;
 
     }

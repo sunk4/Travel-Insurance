@@ -80,8 +80,6 @@ public class MainCustomerEntity {
     @OneToMany(mappedBy = "customer")
     private List<InsuranceEntity> insurances;
 
-    @OneToMany(mappedBy = "mainCustomer", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<InsuredPersonEntity> insuredPersons;
 
     @CreatedDate
     @Column(nullable = false, updatable = false)

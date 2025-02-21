@@ -4,6 +4,7 @@ import com.roman.Insurance.country.CountryEntity;
 import com.roman.Insurance.customer.MainCustomerEntity;
 import com.roman.Insurance.enums.StatusOfPayment;
 import com.roman.Insurance.insuranceType.InsuranceTypeEntity;
+import com.roman.Insurance.insuredPerson.InsuredPersonEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
@@ -35,9 +36,6 @@ public class InsuranceEntity {
     @JoinColumn(name = "country_id", nullable = false)
     @NotNull(message = "Country is required")
     private CountryEntity country;
-    @NotNull(message = "Trip length is required.")
-    @Min(value = 1, message = "Trip length must be at least 1.")
-    private int tripLength;
     @NotNull
     @FutureOrPresent(message = "Start date must be today or in the future.")
     private LocalDate startDate;
@@ -66,6 +64,9 @@ public class InsuranceEntity {
     @ManyToOne
     @JoinColumn(name = "main_customer_id")
     private MainCustomerEntity customer;
+
+    @OneToMany(mappedBy = "insurance", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<InsuredPersonEntity> insuredPersons;
 
     @CreatedDate
     @Column(nullable = false, updatable = false)

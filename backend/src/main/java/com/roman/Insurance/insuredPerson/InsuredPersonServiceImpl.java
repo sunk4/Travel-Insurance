@@ -17,21 +17,18 @@ import java.util.UUID;
 public class InsuredPersonServiceImpl implements InsuredPersonService {
     private final InsuredPersonRepository insuredPersonRepository;
     private final InsuredPersonMapper insuredPersonMapper;
-    private final MainCustomerService mainCustomerService;
     private final EncryptionService encryptionService;
     private final AgeCategoryService ageCategoryService;
     private final RiskFactorService riskFactorService;
 
     @Override
-    public List<UUID> createInsuredPerson (List<InsuredPersonDTO> insuredPersonDTOS, UUID mainCustomerId) throws Exception {
-        MainCustomerEntity mainCustomerEntity = mainCustomerService.getCustomerById(mainCustomerId);
+    public List<UUID> createInsuredPerson (List<InsuredPersonDTO> insuredPersonDTOS) throws Exception {
 
         List<InsuredPersonEntity> insuredPersonEntities = new ArrayList<>();
 
         for (InsuredPersonDTO insuredPersonDTO : insuredPersonDTOS) {
             InsuredPersonEntity insuredPersonEntity = insuredPersonMapper.toEntity(insuredPersonDTO);
             insuredPersonEntity = encryptionService.encrypt(insuredPersonEntity);
-            insuredPersonEntity.setMainCustomer(mainCustomerEntity);
             insuredPersonEntity.setAgeCategory(ageCategoryService.getAgeCategoryEntityById(insuredPersonDTO.ageCategoryId()));
             insuredPersonEntity.setRiskFactor(riskFactorService.getRiskFactorEntityById(insuredPersonDTO.riskFactorId()));
             insuredPersonEntities.add(insuredPersonEntity);

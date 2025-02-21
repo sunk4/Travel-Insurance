@@ -1,6 +1,5 @@
 package com.roman.Insurance.insurance;
 
-import com.roman.Insurance.country.CountryDto;
 import com.roman.Insurance.enums.StatusOfPayment;
 import com.roman.Insurance.insuranceType.InsuranceTypeDto;
 import jakarta.validation.constraints.FutureOrPresent;
@@ -12,13 +11,8 @@ import java.util.List;
 import java.util.UUID;
 
 public record InsuranceDTO(
-
         UUID id,
-
-        @NotNull(message = "Country is required")
-        CountryDto country,
-
-        int tripLength,
+        UUID countryId,
 
         @NotNull
         @FutureOrPresent(message = "Start date must be today or in the future.")
@@ -35,7 +29,6 @@ public record InsuranceDTO(
         String urlInsurancePreview,
         String urlInsurancePayed,
         double totalPrice,
-
 
         UUID customerId,
 

@@ -2,6 +2,7 @@ package com.roman.Insurance.insuredPerson;
 
 import com.roman.Insurance.ageCategories.AgeCategoryEntity;
 import com.roman.Insurance.customer.MainCustomerEntity;
+import com.roman.Insurance.insurance.InsuranceEntity;
 import com.roman.Insurance.riskFactor.RiskFactorEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -47,9 +48,9 @@ public class InsuredPersonEntity {
     private LocalDate dateOfBirth;
 
     @ManyToOne
-    @JoinColumn(name = "main_customer_id", nullable = false)
-    @NotNull(message = "Main customer is required")
-    private MainCustomerEntity mainCustomer;
+    @JoinColumn(name = "insurance_id", nullable = false)
+    @NotNull(message = "Insurance is required")
+    private InsuranceEntity insurance;
 
     @ManyToOne
     @JoinColumn(name = "age_category_id", nullable = false)

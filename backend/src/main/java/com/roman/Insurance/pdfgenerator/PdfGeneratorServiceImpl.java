@@ -86,8 +86,6 @@ public class PdfGeneratorServiceImpl implements PdfGeneratorService {
             table.addCell(new PdfPCell(new Phrase("End Date:", headerFont)));
             table.addCell(new PdfPCell(new Phrase(insuranceEntity.getEndDate().toString(), normalFont)));
 
-            table.addCell(new PdfPCell(new Phrase("Trip Length (days):", headerFont)));
-            table.addCell(new PdfPCell(new Phrase(String.valueOf(insuranceEntity.getTripLength()), normalFont)));
 
             table.addCell(new PdfPCell(new Phrase("Total Price:", headerFont)));
             table.addCell(new PdfPCell(new Phrase(String.format("$%.2f", insuranceEntity.getTotalPrice()), normalFont)));

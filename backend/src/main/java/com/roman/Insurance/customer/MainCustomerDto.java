@@ -39,7 +39,6 @@ public record MainCustomerDto(
         @NotBlank(message = "Personal identification number is required")
         String personalIdentificationNumber,
 
-        List<InsuredPersonDTO> insuredPersons,
 
         LocalDateTime createdAt,
 
