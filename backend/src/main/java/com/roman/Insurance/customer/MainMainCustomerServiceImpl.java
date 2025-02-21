@@ -14,13 +14,11 @@ public class MainMainCustomerServiceImpl implements MainCustomerService {
     private final EncryptionService encryptionService;
 
     @Override
-    public MainCustomerEntity createCustomer (MainCustomerDTO mainCustomerDTO) throws Exception {
+    public UUID createMainCustomer (MainCustomerDto mainCustomerDto) throws Exception {
+        MainCustomerEntity customerEntity = customerMapper.toEntity(mainCustomerDto);
+        MainCustomerEntity encryptedCustomerEntity = encryptionService.encrypt(customerEntity);
+        return mainCustomerRepository.save(encryptedCustomerEntity).getId();
 
-        MainCustomerEntity customerEntity = customerMapper.toEntity(mainCustomerDTO);
-        MainCustomerEntity savedCustomerEntity = encryptionService.encrypt(customerEntity);
-        mainCustomerRepository.save(savedCustomerEntity);
-
-        return customerEntity;
     }
 
     @Override

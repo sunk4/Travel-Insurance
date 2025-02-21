@@ -52,7 +52,7 @@ public class CountryServiceImpl implements CountryService {
                     ageCategoryService.getAgeCategoryById(ageCategoryId).priceFactor();
             double priceFactoredPrice = basePricePerDay * priceFactorAgeCategory;
             double priceFactorRiskFactor =
-                    riskFactorService.findRiskFactorById(riskFactorId).riskFactor();
+                    riskFactorService.getRiskFactorById(riskFactorId).riskFactor();
             priceFactoredPrice *= priceFactorRiskFactor;
 
             totalCalculatedPrice += priceFactoredPrice;

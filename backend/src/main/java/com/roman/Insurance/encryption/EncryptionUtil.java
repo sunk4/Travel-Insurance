@@ -22,6 +22,7 @@ public class EncryptionUtil {
         return Base64.getEncoder().encodeToString(encryptedBytes);
     }
 
+
     public String decrypt(String encryptedData) throws Exception {
         SecretKeySpec keySpec = new SecretKeySpec(secretKey.getBytes(), ALGORITHM);
         Cipher cipher = Cipher.getInstance(ALGORITHM);

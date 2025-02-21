@@ -6,9 +6,9 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface MainCustomerMapper {
-    MainCustomerEntity toEntity (MainCustomerDTO mainCustomerDTO);
+    MainCustomerEntity toEntity (MainCustomerDto mainCustomerDTO);
 
-    MainCustomerDTO toDto (MainCustomerEntity customerEntity);
+    MainCustomerDto toDto (MainCustomerEntity customerEntity);
 
-    List<MainCustomerDTO> entityListToDto (List<MainCustomerEntity> customerEntities);
+    List<MainCustomerDto> entityListToDto (List<MainCustomerEntity> customerEntities);
 }

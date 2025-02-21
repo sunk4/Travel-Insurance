@@ -21,9 +21,14 @@ public class RiskFactorServiceImpl implements RiskFactorService {
     }
 
     @Override
-    public RiskFactorDto findRiskFactorById (UUID id) {
+    public RiskFactorDto getRiskFactorById (UUID id) {
         RiskFactorEntity riskFactor = riskFactorRepository.findById(id).orElseThrow(() -> new RuntimeException("Risk factor not found"));
 
         return riskFactorMapper.toDto(riskFactor);
+    }
+
+    @Override
+    public RiskFactorEntity getRiskFactorEntityById (UUID id) {
+        return riskFactorRepository.findById(id).orElseThrow(() -> new RuntimeException("Risk factor not found"));
     }
 }

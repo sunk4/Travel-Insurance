@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
-public record MainCustomerDTO(
+public record MainCustomerDto(
         UUID id,
 
         @NotBlank(message = "First name is required")

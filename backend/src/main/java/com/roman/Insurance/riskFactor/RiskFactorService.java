@@ -6,5 +6,6 @@ import java.util.UUID;
 public interface RiskFactorService {
     List<RiskFactorDto> findAllRiskFactors ();
 
-    RiskFactorDto findRiskFactorById (UUID id);
+    RiskFactorDto getRiskFactorById (UUID id);
+    RiskFactorEntity getRiskFactorEntityById (UUID id);
 }

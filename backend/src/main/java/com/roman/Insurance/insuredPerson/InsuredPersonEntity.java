@@ -34,7 +34,7 @@ public class InsuredPersonEntity {
 
     private String encryptedLastName;
 
-    private LocalDate encryptedDateOfBirth;
+    private String encryptedDateOfBirth;
 
     @Transient
     @NotBlank(message = "First name is required")
@@ -43,7 +43,7 @@ public class InsuredPersonEntity {
     @NotBlank(message = "Last name is required")
     private String lastName;
     @Transient
-    @NotBlank(message = "Date of birth is required")
+    @NotNull(message = "Date of birth is required")
     private LocalDate dateOfBirth;
 
     @ManyToOne

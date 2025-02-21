@@ -19,6 +19,11 @@ public class AgeCategoryServiceImpl implements AgeCategoryService {
 
     @Override
     public AgeCategoryDto getAgeCategoryById (UUID id) {
-        return ageCategoryMapper.toDto(ageCategoryRepository.findById(id).orElseThrow());
+        return ageCategoryMapper.toDto(ageCategoryRepository.findById(id).orElseThrow(()-> new RuntimeException("Age category not found")));
+    }
+
+    @Override
+    public AgeCategoryEntity getAgeCategoryEntityById (UUID id) {
+        return ageCategoryRepository.findById(id).orElseThrow(()-> new RuntimeException("Age category not found"));
     }
 }

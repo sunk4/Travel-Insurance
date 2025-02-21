@@ -24,7 +24,7 @@ public class RiskFactorController {
     }
     @GetMapping("/{id}")
     public ResponseEntity<RiskFactorDto> findRiskFactorById(@PathVariable UUID id) {
-        RiskFactorDto riskFactor = riskFactorService.findRiskFactorById(id);
+        RiskFactorDto riskFactor = riskFactorService.getRiskFactorById(id);
         return new ResponseEntity<>(riskFactor, HttpStatus.OK);
     }
 }

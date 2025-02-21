@@ -11,6 +11,7 @@ public record InsuredPersonDTO(
         LocalDate dateOfBirth,
         UUID ageCategoryId,
         UUID riskFactorId,
+        UUID mainCustomerId,
         LocalDateTime createdAt,
         LocalDateTime updatedAt
 

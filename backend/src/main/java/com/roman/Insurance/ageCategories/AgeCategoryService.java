@@ -7,5 +7,6 @@ public interface AgeCategoryService {
     List<AgeCategoryDto> getAllAgeCategories ();
 
     AgeCategoryDto getAgeCategoryById (UUID id);
+    AgeCategoryEntity getAgeCategoryEntityById (UUID id);
 
 }

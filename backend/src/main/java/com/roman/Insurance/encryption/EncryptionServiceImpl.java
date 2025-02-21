@@ -1,8 +1,11 @@
 package com.roman.Insurance.encryption;
 
 import com.roman.Insurance.customer.MainCustomerEntity;
+import com.roman.Insurance.insuredPerson.InsuredPersonEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
 
 @Service
 @RequiredArgsConstructor
@@ -72,5 +75,35 @@ public class EncryptionServiceImpl implements EncryptionService {
             customerEntity.setPersonalIdentificationNumber(encryption.decrypt(customerEntity.getEncryptedPersonalIdentificationNumber()));
         }
         return customerEntity;
+    }
+
+    @Override
+    public InsuredPersonEntity encrypt (InsuredPersonEntity insuredPersonEntity) throws Exception {
+
+        if(insuredPersonEntity.getFirstName() != null) {
+            insuredPersonEntity.setEncryptedFistName(encryption.encrypt(insuredPersonEntity.getFirstName()));
+        }
+        if(insuredPersonEntity.getLastName() != null) {
+            insuredPersonEntity.setEncryptedLastName(encryption.encrypt(insuredPersonEntity.getLastName()));
+        }
+        if(insuredPersonEntity.getDateOfBirth() != null) {
+            insuredPersonEntity.setEncryptedDateOfBirth(encryption.encrypt(insuredPersonEntity.getDateOfBirth().toString()));
+        }
+        return insuredPersonEntity;
+    }
+
+    @Override
+    public InsuredPersonEntity decrypt (InsuredPersonEntity insuredPersonEntity) throws Exception {
+
+        if(insuredPersonEntity.getEncryptedFistName() != null) {
+            insuredPersonEntity.setFirstName(encryption.decrypt(insuredPersonEntity.getEncryptedFistName()));
+        }
+        if(insuredPersonEntity.getEncryptedLastName() != null) {
+            insuredPersonEntity.setLastName(encryption.decrypt(insuredPersonEntity.getEncryptedLastName()));
+        }
+        if(insuredPersonEntity.getEncryptedDateOfBirth() != null) {
+            insuredPersonEntity.setDateOfBirth(LocalDate.parse(encryption.decrypt(insuredPersonEntity.getEncryptedDateOfBirth())));
+        }
+        return insuredPersonEntity;
     }
 }
