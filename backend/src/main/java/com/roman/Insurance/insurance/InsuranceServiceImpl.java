@@ -22,8 +22,10 @@ public class InsuranceServiceImpl implements InsuranceService {
     private final CountryService countryService;
     private final InsuranceTypeService insuranceTypeService;
 
+
     @Override
-    public UUID createInsurance (InsuranceDTO insuranceDTO, UUID mainCustomerId) {
+    public UUID createInsurance (InsuranceDTO insuranceDTO,
+                                 UUID mainCustomerId,double totalPrice) {
         MainCustomerEntity customerEntity = mainCustomerService.getCustomerById(mainCustomerId);
         CountryEntity countryEntity =
                 countryService.findCountryEntityById(insuranceDTO.countryId());
@@ -33,6 +35,7 @@ public class InsuranceServiceImpl implements InsuranceService {
         insuranceEntity.setCustomer(customerEntity);
         insuranceEntity.setStatusOfPayment(StatusOfPayment.UNPAID);
         insuranceEntity.setCountry(countryEntity);
+        insuranceEntity.setTotalPrice(totalPrice);
 
         List<InsuranceTypeEntity> insuranceTypes = insuranceTypeService.getAllInsuranceTypesEntitiesByIds(insuranceDTO.insuranceTypeIds());
         insuranceEntity.setInsuranceTypes(insuranceTypes);

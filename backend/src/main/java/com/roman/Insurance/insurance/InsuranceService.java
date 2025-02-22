@@ -7,6 +7,7 @@ import java.util.UUID;
 
 public interface InsuranceService {
 
-    UUID createInsurance (InsuranceDTO insuranceDTO, UUID mainCustomerId);
+    UUID createInsurance (InsuranceDTO insuranceDTO, UUID mainCustomerId,
+                          double totalPrice);
     InsuranceEntity getInsuranceEntityById (UUID id);
 }

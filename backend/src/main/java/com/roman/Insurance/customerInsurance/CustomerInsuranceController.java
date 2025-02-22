@@ -1,5 +1,6 @@
 package com.roman.Insurance.customerInsurance;
 
+import com.roman.Insurance.calculation.CalculationService;
 import com.roman.Insurance.customer.MainCustomerService;
 import com.roman.Insurance.email.EmailService;
 import com.roman.Insurance.insurance.InsuranceService;
@@ -24,6 +25,7 @@ public class CustomerInsuranceController {
     private final MainCustomerService customerService;
     private final InsuredPersonService insurePersonService;
     private final InsuranceService insuranceService;
+    private final CalculationService calculationService;
     private final PdfGeneratorService pdfGeneratorService;
     private final UploadService uploadService;
     private final EmailService emailService;
@@ -31,17 +33,16 @@ public class CustomerInsuranceController {
 
     @PostMapping
     public ResponseEntity<Void> createTravelInsurance (@RequestBody CustomerTravelInsuranceRequest customerTravelInsuranceRequest) throws Exception {
-        System.out.println(customerTravelInsuranceRequest);
+
         UUID mainCustomerId = customerService.createMainCustomer(customerTravelInsuranceRequest.mainCustomerDto());
 
-        UUID insuranceId =
-                insuranceService.createInsurance(customerTravelInsuranceRequest.insuranceDTO(),mainCustomerId);
 
+        double totalPrice = calculationService.calculatePriceTotal(customerTravelInsuranceRequest);
+        UUID insuranceId =
+                insuranceService.createInsurance(customerTravelInsuranceRequest.insuranceDTO(), mainCustomerId, totalPrice);
 
         List<UUID> insuredPersonIds =
-                insurePersonService.createInsuredPerson(customerTravelInsuranceRequest.insuredPersonDTO(),insuranceId);
-
-
+                insurePersonService.createInsuredPerson(customerTravelInsuranceRequest.insuredPersonDTO(), insuranceId);
 
         return null;
 

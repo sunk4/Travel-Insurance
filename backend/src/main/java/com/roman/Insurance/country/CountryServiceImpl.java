@@ -2,6 +2,7 @@ package com.roman.Insurance.country;
 
 import com.roman.Insurance.ageCategories.AgeCategoryService;
 import com.roman.Insurance.coverageRegions.CoverageRegionDto;
+import com.roman.Insurance.customerInsurance.CustomerTravelInsuranceRequest;
 import com.roman.Insurance.riskFactor.RiskFactorService;
 import com.roman.Insurance.utils.DateUtilsService;
 import lombok.RequiredArgsConstructor;
@@ -39,19 +40,18 @@ public class CountryServiceImpl implements CountryService {
     }
 
     @Override
-    public CountryDto findCountryByIdAndCalculatedPriceByRiskFactorDateAgeCategory (PriceCalculationRequestDto priceCalculationRequestDto) {
+    public CountryDto findCountryByIdAndCalculatedPriceByRiskFactorDateAgeCategory (CustomerTravelInsuranceRequest customerTravelInsuranceRequest) {
         CountryEntity countryEntity =
-                countryRepository.findById(priceCalculationRequestDto.countryId()).orElseThrow(() -> new RuntimeException("Country not found"));
+                countryRepository.findById(customerTravelInsuranceRequest.insuranceDTO().countryId()).orElseThrow(() -> new RuntimeException("Country not found"));
 
         CountryDto countryDto = countryMapper.countryEntityToCountryDto(countryEntity);
         double basePricePerDay = countryDto.coverageRegion().basePricePerDay();
         double totalCalculatedPrice = 0.0;
 
-        int maxSize = Math.max(priceCalculationRequestDto.ageCategoriesIds().size(), priceCalculationRequestDto.riskFactorIds().size());
 
-        for (int i = 0; i < maxSize; i++) {
-            UUID ageCategoryId = priceCalculationRequestDto.ageCategoriesIds().get(i);
-            UUID riskFactorId = priceCalculationRequestDto.riskFactorIds().get(i);
+        for (int i = 0; i < customerTravelInsuranceRequest.insuredPersonDTO().size(); i++) {
+            UUID ageCategoryId = customerTravelInsuranceRequest.insuredPersonDTO().get(i).ageCategoryId();
+            UUID riskFactorId = customerTravelInsuranceRequest.insuredPersonDTO().get(i).riskFactorId();
 
             double priceFactorAgeCategory =
                     ageCategoryService.getAgeCategoryById(ageCategoryId).priceFactor();
@@ -65,7 +65,7 @@ public class CountryServiceImpl implements CountryService {
         }
 
         long days =
-                dateUtilsService.calculateDateDifferenceInDays(priceCalculationRequestDto.startDate(), priceCalculationRequestDto.endDate());
+                dateUtilsService.calculateDateDifferenceInDays(customerTravelInsuranceRequest.insuranceDTO().startDate(), customerTravelInsuranceRequest.insuranceDTO().endDate());
 
         totalCalculatedPrice *= days;
 

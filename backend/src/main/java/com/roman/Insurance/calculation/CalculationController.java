@@ -1,5 +1,6 @@
 package com.roman.Insurance.calculation;
 
+import com.roman.Insurance.customerInsurance.CustomerTravelInsuranceRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,9 +15,9 @@ public class CalculationController {
     private final CalculationService calculationService;
 
     @PostMapping
-    public ResponseEntity<CalculationDto> calculatePrice (@RequestBody CalculationRequestDto calculationRequestDto) {
+    public ResponseEntity<CalculationDto> calculatePrice (@RequestBody CustomerTravelInsuranceRequest customerTravelInsuranceRequest) {
         CalculationDto calculationResponseDto =
-                calculationService.calculatePrice(calculationRequestDto);
+                calculationService.calculatePrice(customerTravelInsuranceRequest);
 
         return ResponseEntity.ok(calculationResponseDto);
     }

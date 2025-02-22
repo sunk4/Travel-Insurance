@@ -2,6 +2,7 @@ package com.roman.Insurance.calculation;
 
 import com.roman.Insurance.country.CountryDto;
 import com.roman.Insurance.country.CountryService;
+import com.roman.Insurance.customerInsurance.CustomerTravelInsuranceRequest;
 import com.roman.Insurance.insuranceType.InsuranceTypeDto;
 import com.roman.Insurance.insuranceType.InsuranceTypeService;
 import lombok.RequiredArgsConstructor;
@@ -17,16 +18,31 @@ public class CalculationServiceImpl implements CalculationService {
     private final CountryService countryService;
 
     @Override
-    public CalculationDto calculatePrice (CalculationRequestDto calculationRequestDto) {
-        CountryDto countryDto = countryService.findCountryByIdAndCalculatedPriceByRiskFactorDateAgeCategory(calculationRequestDto.priceCalculationRequestDto());
-        List<InsuranceTypeDto> insuranceTypes =
-                insuranceTypeService.getAllCalculatedInsuranceTypesByDates(calculationRequestDto.insuranceTypeCalculationDto());
-        InsuranceCalculationResponse pickedInsuranceTypes =
-                insuranceTypeService.getPickedInsuranceTypes(calculationRequestDto.pickedInsuranceTypesDto(), insuranceTypes,countryDto);
+    public CalculationDto calculatePrice (CustomerTravelInsuranceRequest customerTravelInsuranceRequest) {
+        CountryDto countryDto = countryService.findCountryByIdAndCalculatedPriceByRiskFactorDateAgeCategory(customerTravelInsuranceRequest);
 
+                List<InsuranceTypeDto> insuranceTypes =
+                insuranceTypeService.getAllCalculatedInsuranceTypesByDates(customerTravelInsuranceRequest);
 
-        return new CalculationDto(countryDto, insuranceTypes,
+                InsuranceCalculationResponse pickedInsuranceTypes =
+                insuranceTypeService.getPickedInsuranceTypes(customerTravelInsuranceRequest, insuranceTypes,countryDto);
+
+                return new CalculationDto(countryDto, insuranceTypes,
                 pickedInsuranceTypes.pickedInsuranceTypes(), pickedInsuranceTypes.totalCalculatedPrice()
                 );
+
+    }
+
+    @Override
+    public double calculatePriceTotal (CustomerTravelInsuranceRequest customerTravelInsuranceRequest) {
+        CountryDto countryDto = countryService.findCountryByIdAndCalculatedPriceByRiskFactorDateAgeCategory(customerTravelInsuranceRequest);
+
+        List<InsuranceTypeDto> insuranceTypes =
+                insuranceTypeService.getAllCalculatedInsuranceTypesByDates(customerTravelInsuranceRequest);
+
+        InsuranceCalculationResponse pickedInsuranceTypes =
+                insuranceTypeService.getPickedInsuranceTypes(customerTravelInsuranceRequest, insuranceTypes,countryDto);
+
+     return pickedInsuranceTypes.totalCalculatedPrice();
     }
 }

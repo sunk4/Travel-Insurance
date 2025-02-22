@@ -3,6 +3,7 @@ package com.roman.Insurance.insuranceType;
 import com.roman.Insurance.calculation.InsuranceCalculationResponse;
 import com.roman.Insurance.calculation.PickedInsuranceTypesDto;
 import com.roman.Insurance.country.CountryDto;
+import com.roman.Insurance.customerInsurance.CustomerTravelInsuranceRequest;
 import com.roman.Insurance.utils.DateUtilsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -37,11 +38,12 @@ public class InsuranceTypeServiceImpl implements InsuranceTypeService {
     }
 
     @Override
-    public List<InsuranceTypeDto> getAllCalculatedInsuranceTypesByDates (InsuranceTypeCalculationDto insuranceTypeCalculationDto) {
+    public List<InsuranceTypeDto> getAllCalculatedInsuranceTypesByDates (CustomerTravelInsuranceRequest customerTravelInsuranceRequest) {
         long days =
-                dateUtilsService.calculateDateDifferenceInDays(insuranceTypeCalculationDto.startDate(),
-                        insuranceTypeCalculationDto.endDate());
-        int amountOfPeople = insuranceTypeCalculationDto.ageCategoryIds().size();
+                dateUtilsService.calculateDateDifferenceInDays(customerTravelInsuranceRequest.insuranceDTO().startDate(),
+                        customerTravelInsuranceRequest.insuranceDTO().endDate());
+        int amountOfPeople =
+                customerTravelInsuranceRequest.insuredPersonDTO().size();
 
         List<InsuranceTypeEntity> insuranceTypes = insuranceTypeRepository.findAll();
         List<InsuranceTypeDto> insuranceTypeDtos = insuranceTypeMapper.entityListToDto(insuranceTypes);
@@ -62,8 +64,9 @@ public class InsuranceTypeServiceImpl implements InsuranceTypeService {
     }
 
     @Override
-    public InsuranceCalculationResponse getPickedInsuranceTypes (PickedInsuranceTypesDto pickedInsuranceTypesDto, List<InsuranceTypeDto> insuranceTypes, CountryDto countryDto) {
-        List<InsuranceTypeDto> pickedInsuranceTypesByUser = insuranceTypes.stream().filter(insuranceTypeDto -> pickedInsuranceTypesDto.insuranceTypes().contains(insuranceTypeDto.id())).toList();
+    public InsuranceCalculationResponse getPickedInsuranceTypes (CustomerTravelInsuranceRequest customerTravelInsuranceRequest, List<InsuranceTypeDto> insuranceTypes, CountryDto countryDto) {
+        List<InsuranceTypeDto> pickedInsuranceTypesByUser =
+                insuranceTypes.stream().filter(insuranceTypeDto -> customerTravelInsuranceRequest.insuranceDTO().insuranceTypeIds().contains(insuranceTypeDto.id())).toList();
         double totalCalculatedPrice =
                 pickedInsuranceTypesByUser.stream().mapToDouble(InsuranceTypeDto::totalCalculatedPrice).sum() + countryDto.coverageRegion().totalCalculatedPrice();
         return new InsuranceCalculationResponse(pickedInsuranceTypesByUser, totalCalculatedPrice);
