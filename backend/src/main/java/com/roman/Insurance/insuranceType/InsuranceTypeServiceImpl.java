@@ -31,6 +31,12 @@ public class InsuranceTypeServiceImpl implements InsuranceTypeService {
     }
 
     @Override
+    public List<InsuranceTypeEntity> getAllInsuranceTypesEntitiesByIds (List<UUID> insuranceTypeIds) {
+
+        return insuranceTypeRepository.findAllById(insuranceTypeIds);
+    }
+
+    @Override
     public List<InsuranceTypeDto> getAllCalculatedInsuranceTypesByDates (InsuranceTypeCalculationDto insuranceTypeCalculationDto) {
         long days =
                 dateUtilsService.calculateDateDifferenceInDays(insuranceTypeCalculationDto.startDate(),

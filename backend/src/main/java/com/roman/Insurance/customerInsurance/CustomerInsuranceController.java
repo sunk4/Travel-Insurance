@@ -39,7 +39,7 @@ public class CustomerInsuranceController {
 
 
         List<UUID> insuredPersonIds =
-                insurePersonService.createInsuredPerson(customerTravelInsuranceRequest.insuredPersonDTO());
+                insurePersonService.createInsuredPerson(customerTravelInsuranceRequest.insuredPersonDTO(),insuranceId);
 
 
 

@@ -34,6 +34,11 @@ public class CountryServiceImpl implements CountryService {
     }
 
     @Override
+    public CountryEntity findCountryEntityById (UUID id) {
+        return countryRepository.findById(id).orElseThrow(() -> new RuntimeException("Country not found"));
+    }
+
+    @Override
     public CountryDto findCountryByIdAndCalculatedPriceByRiskFactorDateAgeCategory (PriceCalculationRequestDto priceCalculationRequestDto) {
         CountryEntity countryEntity =
                 countryRepository.findById(priceCalculationRequestDto.countryId()).orElseThrow(() -> new RuntimeException("Country not found"));

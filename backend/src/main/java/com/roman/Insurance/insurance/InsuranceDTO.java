@@ -22,7 +22,7 @@ public record InsuranceDTO(
         @FutureOrPresent(message = "End date must be today or in the future.")
         LocalDate endDate,
 
-        List<InsuranceTypeDto> insuranceTypes,
+        List<UUID> insuranceTypeIds,
 
         StatusOfPayment statusOfPayment,
 

@@ -11,6 +11,7 @@ public interface InsuranceTypeService {
 
     List<InsuranceTypeDto> getAllInsuranceTypes();
     InsuranceTypeDto getInsuranceTypeById(UUID id);
+    List<InsuranceTypeEntity> getAllInsuranceTypesEntitiesByIds(List<UUID> insuranceTypeIds);
 
     List<InsuranceTypeDto> getAllCalculatedInsuranceTypesByDates (InsuranceTypeCalculationDto insuranceTypeCalculationDto);
 
