@@ -1,7 +1,6 @@
 package com.roman.Insurance.insuranceType;
 
 import com.roman.Insurance.calculation.InsuranceCalculationResponse;
-import com.roman.Insurance.calculation.PickedInsuranceTypesDto;
 import com.roman.Insurance.country.CountryDto;
 import com.roman.Insurance.customerInsurance.CustomerTravelInsuranceRequest;
 import com.roman.Insurance.utils.DateUtilsService;

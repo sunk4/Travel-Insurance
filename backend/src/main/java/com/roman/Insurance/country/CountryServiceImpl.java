@@ -50,8 +50,10 @@ public class CountryServiceImpl implements CountryService {
 
 
         for (int i = 0; i < customerTravelInsuranceRequest.insuredPersonDTO().size(); i++) {
-            UUID ageCategoryId = customerTravelInsuranceRequest.insuredPersonDTO().get(i).ageCategoryId();
-            UUID riskFactorId = customerTravelInsuranceRequest.insuredPersonDTO().get(i).riskFactorId();
+            UUID ageCategoryId =
+                    customerTravelInsuranceRequest.insuredPersonDTO().get(i).ageCategory().id();
+            UUID riskFactorId =
+                    customerTravelInsuranceRequest.insuredPersonDTO().get(i).riskFactor().id();
 
             double priceFactorAgeCategory =
                     ageCategoryService.getAgeCategoryById(ageCategoryId).priceFactor();
@@ -73,7 +75,10 @@ public class CountryServiceImpl implements CountryService {
                 countryDto.coverageRegion().withTotalCalculatedPrice(Math.round(totalCalculatedPrice * 100.0) / 100.0);
 
         return new CountryDto(countryDto.id(), countryDto.name(),
-                countryWithCalculatedPrice, days, countryDto.createdAt(),
+                countryWithCalculatedPrice, days,
+                customerTravelInsuranceRequest.insuranceDTO().startDate(),
+                customerTravelInsuranceRequest.insuranceDTO().endDate() ,
+                countryDto.createdAt(),
                 countryDto.updatedAt());
 
     }

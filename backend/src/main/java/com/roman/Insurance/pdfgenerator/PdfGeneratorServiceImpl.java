@@ -118,6 +118,11 @@ public class PdfGeneratorServiceImpl implements PdfGeneratorService {
         }
     }
 
+    @Override
+    public byte[] generateInsurancePdf () {
+        return new byte[0];
+    }
+
     private static PdfPTable getPdfPTable (Font normalFont) throws DocumentException {
         PdfPTable signatureTable = new PdfPTable(2);
         signatureTable.setWidthPercentage(100);

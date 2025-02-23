@@ -5,5 +5,6 @@ import com.roman.Insurance.insurance.InsuranceEntity;
 
 public interface PdfGeneratorService {
     byte[] generatePdf(MainCustomerEntity customerEntity, InsuranceEntity insuranceEntity) throws Exception;
+    byte[] generateInsurancePdf();
 
 }

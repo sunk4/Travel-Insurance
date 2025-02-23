@@ -22,27 +22,12 @@ import java.util.UUID;
 @RequestMapping("/customerInsurance")
 @RequiredArgsConstructor
 public class CustomerInsuranceController {
-    private final MainCustomerService customerService;
-    private final InsuredPersonService insurePersonService;
-    private final InsuranceService insuranceService;
-    private final CalculationService calculationService;
-    private final PdfGeneratorService pdfGeneratorService;
-    private final UploadService uploadService;
-    private final EmailService emailService;
-    private final StripeService stripeService;
+    private final CustomerInsuranceService customerInsuranceService;
 
     @PostMapping
     public ResponseEntity<Void> createTravelInsurance (@RequestBody CustomerTravelInsuranceRequest customerTravelInsuranceRequest) throws Exception {
 
-        UUID mainCustomerId = customerService.createMainCustomer(customerTravelInsuranceRequest.mainCustomerDto());
-
-
-        double totalPrice = calculationService.calculatePriceTotal(customerTravelInsuranceRequest);
-        UUID insuranceId =
-                insuranceService.createInsurance(customerTravelInsuranceRequest.insuranceDTO(), mainCustomerId, totalPrice);
-
-        List<UUID> insuredPersonIds =
-                insurePersonService.createInsuredPerson(customerTravelInsuranceRequest.insuredPersonDTO(), insuranceId);
+        customerInsuranceService.createTravelInsurance(customerTravelInsuranceRequest);
 
         return null;
 

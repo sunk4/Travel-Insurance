@@ -8,4 +8,6 @@ public interface InsuredPersonService {
             List<InsuredPersonDTO> insuredPersonDTO,
             UUID insuranceId
     ) throws Exception;
+
+    List<InsuredPersonDTO> getInsuredPersons(List<InsuredPersonDTO> insuredPersonDTO);
 }
